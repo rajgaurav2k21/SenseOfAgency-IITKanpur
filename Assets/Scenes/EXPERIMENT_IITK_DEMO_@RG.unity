@@ -14764,6 +14764,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd4cd2218a9d1694bb00926ae50322f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonObject: {fileID: 0}
+  _buttonShouldDelayRebound: 0
+  _buttonStaydownTimer: 2
+  _shouldOnlyBePressedByHand: 0
+  _whichHandCanPressButton: 2
+  OnButtonPressed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnButtonUnPressed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &2776420389334584100
 Transform:
   m_ObjectHideFlags: 0
