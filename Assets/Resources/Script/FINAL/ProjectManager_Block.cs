@@ -27,7 +27,8 @@ public class ProjectManager_Block : MonoBehaviour
     private GameObject currentCondition;
     private string filePath;
     public bool buttonPressed = false;
-
+    public bool restActive = false;
+    public GameObject rest;
     void Start()
     {
         userPanel.SetActive(true);
@@ -92,8 +93,10 @@ public class ProjectManager_Block : MonoBehaviour
             DefaultCamera.SetActive(true);
             feedback.SetActive(true);
             yield return new WaitUntil(() => buttonPressed);
+            rest.SetActive(true);
+            yield return new WaitUntil(() => restActive);
             DefaultCamera.SetActive(false);
-            yield return new WaitForSeconds(3f);
+            //yield return new WaitForSeconds(3f);
             count++;
             Debug.Log("Experiment Number: " + count);
         }
