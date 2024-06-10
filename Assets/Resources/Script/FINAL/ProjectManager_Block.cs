@@ -59,7 +59,7 @@ public class ProjectManager_Block : MonoBehaviour
 
     IEnumerator StartExperiment()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         path.SetActive(true);
         Target.SetActive(true);
         Debug.Log("Experiment Initialized:]");
@@ -90,10 +90,12 @@ public class ProjectManager_Block : MonoBehaviour
             Target.SetActive(false);
             path.SetActive(false);
             currentCondition.SetActive(false);
+            Debug.Log(currentCondition + "  is over");
             DefaultCamera.SetActive(true);
             feedback.SetActive(true);
             yield return new WaitUntil(() => buttonPressed);
             rest.SetActive(true);
+            Debug.Log("You can Rest");
             yield return new WaitUntil(() => restActive);
             DefaultCamera.SetActive(false);
             //yield return new WaitForSeconds(3f);
@@ -118,7 +120,7 @@ public class ProjectManager_Block : MonoBehaviour
         InfoPanel.SetActive(true);
     }
 
-    public void SaveToCSV(string username, string conditionName, int response)
+    public void SaveToCSV(string username, string conditionName, float response)
     {
         using (StreamWriter sw = new StreamWriter(filePath, true, Encoding.UTF8))
         {
