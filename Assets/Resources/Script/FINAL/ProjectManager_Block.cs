@@ -28,9 +28,16 @@ public class ProjectManager_Block : MonoBehaviour
     private string filePath;
     public bool buttonPressed = false;
     public bool restActive = false;
+    public bool BallPicked = false;
     public GameObject rest;
+    public GameObject Pickupmessage_Tennis;
+    public GameObject Pickupmessage_Smily;
+    public GameObject Pickupmessage_Heavy;
     void Start()
     {
+        Pickupmessage_Tennis.SetActive(false);
+        Pickupmessage_Smily.SetActive(false);
+        Pickupmessage_Heavy.SetActive(false);
         userPanel.SetActive(true);
         Target.SetActive(false);
         path.SetActive(false);
@@ -60,9 +67,7 @@ public class ProjectManager_Block : MonoBehaviour
     IEnumerator StartExperiment()
     {
         yield return new WaitForSeconds(3f);
-        path.SetActive(true);
-        Target.SetActive(true);
-        Debug.Log("Experiment Initialized:]");
+        Debug.Log("Pick Up The Weight");
         int count = 0;
         string[] taskOrder = new string[] { "b", "c", "a", "c", "c", "a", "b", "b", "a", "c", "b", "a", "a", "c", "b", "c", "b", "a" };
         foreach (string task in taskOrder)
@@ -74,16 +79,23 @@ public class ProjectManager_Block : MonoBehaviour
                 case "a":
                     currentCondition = baselineCondition;
                     Debug.Log("Current Condition: baselineCondition");
+                    Pickupmessage_Smily.SetActive(true);
                     break;
                 case "b":
                     currentCondition = interventionCondition;
                     Debug.Log("Current Condition: interventionCondition");
+                    Pickupmessage_Tennis.SetActive(true);
                     break;
                 case "c":
                     currentCondition = nonInterventionCondition;
                     Debug.Log("Current Condition: nonInterventionCondition");
+                    Pickupmessage_Heavy.SetActive(true);
                     break;
             }
+            yield return new WaitUntil(() => BallPicked);   
+            path.SetActive(true);
+            Target.SetActive(true);
+            Debug.Log("Experiment Initialized:]");
             currentCondition.SetActive(true);
             //Active Time of the Condition
             yield return new WaitForSeconds(20f);
