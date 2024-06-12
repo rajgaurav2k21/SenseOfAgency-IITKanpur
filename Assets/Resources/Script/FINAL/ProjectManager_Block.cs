@@ -33,8 +33,12 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject Pickupmessage_Tennis;
     public GameObject Pickupmessage_Smily;
     public GameObject Pickupmessage_Heavy;
+    public GameObject UltraleapManager;
+    public GameObject Ultraleap_Camera;
     void Start()
     {
+        Ultraleap_Camera.SetActive(false);
+        UltraleapManager.SetActive(false);
         Pickupmessage_Tennis.SetActive(false);
         Pickupmessage_Smily.SetActive(false);
         Pickupmessage_Heavy.SetActive(false);
@@ -73,6 +77,7 @@ public class ProjectManager_Block : MonoBehaviour
         foreach (string task in taskOrder)
         {
             DefaultCamera.SetActive(false);
+            Ultraleap_Camera.SetActive(true);
             currentCondition = null;
             switch (task)
             {
@@ -96,13 +101,16 @@ public class ProjectManager_Block : MonoBehaviour
             path.SetActive(true);
             Target.SetActive(true);
             Debug.Log("Experiment Initialized:]");
+            UltraleapManager.SetActive(true);
             currentCondition.SetActive(true);
             //Active Time of the Condition
             yield return new WaitForSeconds(20f);
             Target.SetActive(false);
             path.SetActive(false);
             currentCondition.SetActive(false);
+            UltraleapManager.SetActive(false);
             Debug.Log(currentCondition + "  is over");
+            Ultraleap_Camera.SetActive(false);
             DefaultCamera.SetActive(true);
             feedback.SetActive(true);
             yield return new WaitUntil(() => buttonPressed);
@@ -110,6 +118,7 @@ public class ProjectManager_Block : MonoBehaviour
             Debug.Log("You can Rest");
             yield return new WaitUntil(() => restActive);
             DefaultCamera.SetActive(false);
+            Ultraleap_Camera.SetActive(true);
             //yield return new WaitForSeconds(3f);
             count++;
             Debug.Log("Experiment Number: " + count);
