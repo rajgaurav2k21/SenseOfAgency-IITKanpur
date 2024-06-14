@@ -33,6 +33,7 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject Pickupmessage_Tennis;
     public GameObject Pickupmessage_Smily;
     public GameObject Pickupmessage_Heavy;
+    public GameObject Ultraleapmanager;
     void Start()
     {
         Pickupmessage_Tennis.SetActive(false);
@@ -45,7 +46,7 @@ public class ProjectManager_Block : MonoBehaviour
         DefaultCamera.SetActive(true);
         InfoPanel.SetActive(false);
         COMPLETE.SetActive(false);
-
+        Ultraleapmanager.SetActive(false);
         Conditions = new GameObject[] { baselineCondition, interventionCondition, nonInterventionCondition };
         remainingConditions = new List<GameObject>(Conditions);
         conditionCounts = new int[Conditions.Length];
@@ -92,19 +93,23 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_Heavy.SetActive(true);
                     break;
             }
-            yield return new WaitUntil(() => BallPicked);   
+            DefaultCamera.SetActive(false);
+            Ultraleapmanager.SetActive(true);
+            currentCondition.SetActive(true);
+            yield return new WaitUntil(() => BallPicked);
+            Debug.Log("Weight is been picked");   
             path.SetActive(true);
             Target.SetActive(true);
             Debug.Log("Experiment Initialized:]");
-            currentCondition.SetActive(true);
             //Active Time of the Condition
             yield return new WaitForSeconds(20f);
             Target.SetActive(false);
             path.SetActive(false);
             currentCondition.SetActive(false);
+            Ultraleapmanager.SetActive(false);
             Debug.Log(currentCondition + "  is over");
-            DefaultCamera.SetActive(true);
             feedback.SetActive(true);
+            DefaultCamera.SetActive(true);
             yield return new WaitUntil(() => buttonPressed);
             rest.SetActive(true);
             Debug.Log("You can Rest");

@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class SwitchOffTV : MonoBehaviour
 {
+    public GameObject display;
     public GameObject led;
     private bool isTVOn = true;
 
     void Start()
     {
         Debug.Log("hemlo");
+        display.SetActive(true);
         led.SetActive(true);
     }
     private void OnTriggerEnter(Collider other)
@@ -25,10 +27,13 @@ public class SwitchOffTV : MonoBehaviour
 
         if (isTVOn)
         {
+            display.SetActive(true);
             led.SetActive(true);
+            
         }
         else
         {
+            display.SetActive(false);
             led.SetActive(false);
         }
     }
