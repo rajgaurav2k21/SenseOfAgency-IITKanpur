@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Feedback : MonoBehaviour
 {
-    public GameObject fb;
+    public GameObject WrongBelief;
     public GameObject Range;
     public Transform TargetTransform;
     public Transform ColliderTransform;
     void Start()
     {
-        fb.SetActive(false);
+        WrongBelief.SetActive(false);
         
     }
     void Update()
@@ -19,8 +19,12 @@ public class Feedback : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-            fb.SetActive(true);
-            StartCoroutine(DestroyAfterDelay(fb, 5.0f));
+        if(other.tag== "Player")
+        {
+            Debug.Log("Wrong belief triggered by "+ other.name);
+            WrongBelief.SetActive(true);
+            StartCoroutine(DestroyAfterDelay(WrongBelief, 5.0f));
+        }
     }
      private IEnumerator DestroyAfterDelay(GameObject obj, float delay)
     {

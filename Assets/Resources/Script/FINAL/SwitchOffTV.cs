@@ -8,16 +8,17 @@ public class SwitchOffTV : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("hemlo");
         display.SetActive(true);
         led.SetActive(true);
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Entering");
-
+        if (other.tag == "Player")
+        {
+            Debug.Log("TV is getting focus by"+ other.name);
             ToggleTV();
-
+        }
+        
     }
 
     private void ToggleTV()

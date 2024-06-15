@@ -7,6 +7,7 @@ using System.Text;
 
 public class ProjectManager_Block : MonoBehaviour
 {
+    public GameObject RestText;
     public GameObject DefaultCamera;
     public GameObject COMPLETE;
     public GameObject InfoPanel;
@@ -34,8 +35,16 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject Pickupmessage_Smily;
     public GameObject Pickupmessage_Heavy;
     public GameObject Ultraleapmanager;
+    public Animator AniCondition1;
+    public Animator AniCondition2;
+    public Animator AniCondition3;
+    public GameObject TaskComplete;
+    public GameObject weight;
+    public GameObject Next;
     void Start()
     {
+        RestText.SetActive(false);
+        TaskComplete.SetActive(false);
         Pickupmessage_Tennis.SetActive(false);
         Pickupmessage_Smily.SetActive(false);
         Pickupmessage_Heavy.SetActive(false);
@@ -50,6 +59,9 @@ public class ProjectManager_Block : MonoBehaviour
         Conditions = new GameObject[] { baselineCondition, interventionCondition, nonInterventionCondition };
         remainingConditions = new List<GameObject>(Conditions);
         conditionCounts = new int[Conditions.Length];
+        weight.SetActive(true);
+        BallPicked = false;
+        Next.SetActive(false);
     }
 
     private void Awake()
@@ -67,12 +79,19 @@ public class ProjectManager_Block : MonoBehaviour
 
     IEnumerator StartExperiment()
     {
-        yield return new WaitForSeconds(3f);
-        Debug.Log("Pick Up The Weight");
+        
         int count = 0;
+        GameObject weight = GameObject.Find("weights");
+        ResetWeight resetWeight= weight.GetComponent<ResetWeight>();
         string[] taskOrder = new string[] { "b", "c", "a", "c", "c", "a", "b", "b", "a", "c", "b", "a", "a", "c", "b", "c", "b", "a" };
         foreach (string task in taskOrder)
-        {
+        {   Debug.Log("Next task Loading");
+            Next.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            Next.SetActive(false);
+            yield return new WaitForSeconds(1f);
+            Debug.Log("Pick Up The Weight");
+            Debug.Log("Experiment Number: " + count);
             DefaultCamera.SetActive(false);
             currentCondition = null;
             switch (task)
@@ -81,21 +100,28 @@ public class ProjectManager_Block : MonoBehaviour
                     currentCondition = baselineCondition;
                     Debug.Log("Current Condition: baselineCondition");
                     Pickupmessage_Smily.SetActive(true);
+                    //AniCondition1.play("cubef");
                     break;
                 case "b":
                     currentCondition = interventionCondition;
                     Debug.Log("Current Condition: interventionCondition");
                     Pickupmessage_Tennis.SetActive(true);
+                    //AniCondition2.play("cubef");
                     break;
                 case "c":
                     currentCondition = nonInterventionCondition;
                     Debug.Log("Current Condition: nonInterventionCondition");
                     Pickupmessage_Heavy.SetActive(true);
+                    //AniCondition3.play("cubef");
                     break;
             }
             DefaultCamera.SetActive(false);
             Ultraleapmanager.SetActive(true);
             currentCondition.SetActive(true);
+            //weight.SetActive(true);
+            BallPicked = false;
+            resetWeight.reset= true;
+            Debug.Log("Picking Ball for iteration "+ count);
             yield return new WaitUntil(() => BallPicked);
             Debug.Log("Weight is been picked");   
             path.SetActive(true);
@@ -103,21 +129,29 @@ public class ProjectManager_Block : MonoBehaviour
             Debug.Log("Experiment Initialized:]");
             //Active Time of the Condition
             yield return new WaitForSeconds(20f);
+            TaskComplete.SetActive(true);
             Target.SetActive(false);
             path.SetActive(false);
             currentCondition.SetActive(false);
             Ultraleapmanager.SetActive(false);
             Debug.Log(currentCondition + "  is over");
+            TaskComplete.SetActive(true);
             feedback.SetActive(true);
             DefaultCamera.SetActive(true);
+            Debug.Log("fedback done");
             yield return new WaitUntil(() => buttonPressed);
+            TaskComplete.SetActive(false);
+            RestText.SetActive(true);
             rest.SetActive(true);
             Debug.Log("You can Rest");
             yield return new WaitUntil(() => restActive);
-            DefaultCamera.SetActive(false);
-            //yield return new WaitForSeconds(3f);
+            Debug.Log("Rest Up");
             count++;
-            Debug.Log("Experiment Number: " + count);
+            BallPicked = false;
+            restActive = false;
+            rest.SetActive(false);
+            Next.SetActive(true);
+            buttonPressed=false;
         }
 
         Debug.Log("Experiment Complete.");

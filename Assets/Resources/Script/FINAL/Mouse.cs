@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Mouse : MonoBehaviour
 {
-    public float moveSpeed = 0.5f;
+    public float moveSpeed = 0.1f;
     Animator animator;
     void Update()
     {
