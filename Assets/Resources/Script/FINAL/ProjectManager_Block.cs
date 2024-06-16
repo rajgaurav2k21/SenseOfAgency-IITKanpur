@@ -34,7 +34,6 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject Pickupmessage_Tennis;
     public GameObject Pickupmessage_Smily;
     public GameObject Pickupmessage_Heavy;
-    public GameObject Ultraleapmanager;
     public Animator AniCondition1;
     public Animator AniCondition2;
     public Animator AniCondition3;
@@ -55,7 +54,6 @@ public class ProjectManager_Block : MonoBehaviour
         DefaultCamera.SetActive(true);
         InfoPanel.SetActive(false);
         COMPLETE.SetActive(false);
-        Ultraleapmanager.SetActive(false);
         Conditions = new GameObject[] { baselineCondition, interventionCondition, nonInterventionCondition };
         remainingConditions = new List<GameObject>(Conditions);
         conditionCounts = new int[Conditions.Length];
@@ -116,7 +114,6 @@ public class ProjectManager_Block : MonoBehaviour
                     break;
             }
             DefaultCamera.SetActive(false);
-            Ultraleapmanager.SetActive(true);
             currentCondition.SetActive(true);
             //weight.SetActive(true);
             BallPicked = false;
@@ -128,12 +125,11 @@ public class ProjectManager_Block : MonoBehaviour
             Target.SetActive(true);
             Debug.Log("Experiment Initialized:]");
             //Active Time of the Condition
-            yield return new WaitForSeconds(20f);
+            yield return new WaitForSeconds(2f);
             TaskComplete.SetActive(true);
             Target.SetActive(false);
             path.SetActive(false);
             currentCondition.SetActive(false);
-            Ultraleapmanager.SetActive(false);
             Debug.Log(currentCondition + "  is over");
             TaskComplete.SetActive(true);
             feedback.SetActive(true);

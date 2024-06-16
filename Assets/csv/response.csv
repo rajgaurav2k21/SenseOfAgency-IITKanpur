@@ -35,3 +35,4 @@
 ,InterventionCondition,2
 ,NonInterventionCondition,6
 ,BaselineCondition,5
+,InterventionCondition(Hand Offset),3
