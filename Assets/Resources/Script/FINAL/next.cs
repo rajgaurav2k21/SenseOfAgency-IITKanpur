@@ -1,21 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Michsky.MUIP;
 
 public class Next : MonoBehaviour
 {
-    private ProjectManager_Block projectManagerBlock;
+    public ProgressBar progressBar;
+    private ProjectManager_Block projectManager_block;
 
     void Start()
     {
-        GameObject experimentManagerBlock = GameObject.Find("ExperimentManager_Block");
-        projectManagerBlock = experimentManagerBlock.GetComponent<ProjectManager_Block>();
+        GameObject experimentManager_block = GameObject.Find("ExperimentManager_Block");
+        projectManager_block = experimentManager_block.GetComponent<ProjectManager_Block>();
     }
 
     public void NextLoading()
     {
-        projectManagerBlock.next = true;
-        projectManagerBlock.Next.SetActive(false);
-        projectManagerBlock.next = false;
+        if (progressBar.currentPercent == 100f)
+        {
+            projectManager_block.next = true;
+            projectManager_block.Next.SetActive(false);
+        }
     }
 }

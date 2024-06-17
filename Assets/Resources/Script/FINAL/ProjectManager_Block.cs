@@ -92,8 +92,6 @@ public class ProjectManager_Block : MonoBehaviour
         {   Debug.Log("Next task Loading");
             Next.SetActive(true);
             yield return new WaitUntil(() => next);
-            //yield return new WaitForSeconds(2f);
-            //yield return new WaitForSeconds(1f);
             Debug.Log("Pick Up The Weight");
             Debug.Log("Experiment Number: " + count);
             DefaultCamera.SetActive(false);
