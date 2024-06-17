@@ -40,6 +40,7 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject TaskComplete;
     public GameObject weight;
     public GameObject Next;
+    public bool next=false;
     void Start()
     {
         RestText.SetActive(false);
@@ -77,7 +78,12 @@ public class ProjectManager_Block : MonoBehaviour
 
     IEnumerator StartExperiment()
     {
-        
+        GameObject baseLineBall = GameObject.Find("BaseLineBall");
+        LEDNode lEDNode= baseLineBall.GetComponentInChildren<LEDNode>();
+        GameObject nonInterventionBall = GameObject.Find("NonInterventionBall");
+        LEDNode lEDNode1= nonInterventionBall.GetComponentInChildren<LEDNode>();
+        GameObject interventionBall = GameObject.Find("InterventionBall");
+        LEDNode lEDNode2= interventionBall.GetComponentInChildren<LEDNode>();
         int count = 0;
         GameObject weight = GameObject.Find("weights");
         ResetWeight resetWeight= weight.GetComponent<ResetWeight>();
@@ -85,9 +91,9 @@ public class ProjectManager_Block : MonoBehaviour
         foreach (string task in taskOrder)
         {   Debug.Log("Next task Loading");
             Next.SetActive(true);
-            yield return new WaitForSeconds(2f);
-            Next.SetActive(false);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitUntil(() => next);
+            //yield return new WaitForSeconds(2f);
+            //yield return new WaitForSeconds(1f);
             Debug.Log("Pick Up The Weight");
             Debug.Log("Experiment Number: " + count);
             DefaultCamera.SetActive(false);
@@ -98,19 +104,25 @@ public class ProjectManager_Block : MonoBehaviour
                     currentCondition = baselineCondition;
                     Debug.Log("Current Condition: baselineCondition");
                     Pickupmessage_Smily.SetActive(true);
-                    //AniCondition1.play("cubef");
+                    lEDNode1.enabled = false;
+                    lEDNode2.enabled = false;
+                    lEDNode.enabled = true;
                     break;
                 case "b":
                     currentCondition = interventionCondition;
                     Debug.Log("Current Condition: interventionCondition");
                     Pickupmessage_Tennis.SetActive(true);
-                    //AniCondition2.play("cubef");
+                    lEDNode.enabled = false;
+                    lEDNode2.enabled = false;
+                    lEDNode1.enabled = true;
                     break;
                 case "c":
                     currentCondition = nonInterventionCondition;
                     Debug.Log("Current Condition: nonInterventionCondition");
                     Pickupmessage_Heavy.SetActive(true);
-                    //AniCondition3.play("cubef");
+                    lEDNode.enabled = false;
+                    lEDNode1.enabled = false;
+                    lEDNode2.enabled = true;
                     break;
             }
             DefaultCamera.SetActive(false);
@@ -147,8 +159,12 @@ public class ProjectManager_Block : MonoBehaviour
             restActive = false;
             rest.SetActive(false);
             Next.SetActive(true);
+            yield return new WaitUntil(() => next);
             buttonPressed=false;
         }
+            AniCondition1.Play("cubef");
+            AniCondition2.Play("cubef");
+            AniCondition3.Play("cubef");
 
         Debug.Log("Experiment Complete.");
         COMPLETE.SetActive(true);
@@ -166,7 +182,6 @@ public class ProjectManager_Block : MonoBehaviour
         Name.SetActive(false);
         InfoPanel.SetActive(true);
     }
-
     public void SaveToCSV(string username, string conditionName, float response)
     {
         using (StreamWriter sw = new StreamWriter(filePath, true, Encoding.UTF8))

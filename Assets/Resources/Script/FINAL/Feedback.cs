@@ -23,7 +23,7 @@ public class Feedback : MonoBehaviour
         {
             Debug.Log("Wrong belief triggered by "+ other.name);
             WrongBelief.SetActive(true);
-            StartCoroutine(DestroyAfterDelay(WrongBelief, 5.0f));
+            StartCoroutine(DestroyAfterDelay(WrongBelief, 7.0f));
         }
     }
      private IEnumerator DestroyAfterDelay(GameObject obj, float delay)
