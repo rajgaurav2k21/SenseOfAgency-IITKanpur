@@ -24,6 +24,7 @@ public class Feedback : MonoBehaviour
             Debug.Log("Wrong belief triggered by "+ other.name);
             WrongBelief.SetActive(true);
             StartCoroutine(DestroyAfterDelay(WrongBelief, 7.0f));
+            Debug.Log("Misconception over");
         }
     }
      private IEnumerator DestroyAfterDelay(GameObject obj, float delay)

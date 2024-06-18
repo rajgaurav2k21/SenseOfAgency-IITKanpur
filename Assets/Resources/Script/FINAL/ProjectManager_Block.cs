@@ -4,43 +4,59 @@ using UnityEngine;
 using TMPro;
 using System.IO;
 using System.Text;
+using Leap.Unity.Interaction;
 
 public class ProjectManager_Block : MonoBehaviour
 {
+    [Header("UltraLeap Manager")]
+    public GameObject UltraLeapManager;
+
+    [Header("UI Elements")]
     public GameObject RestText;
     public GameObject DefaultCamera;
     public GameObject COMPLETE;
     public GameObject InfoPanel;
     public GameObject Name;
-    public GameObject baselineCondition;
-    public GameObject interventionCondition;
-    public GameObject nonInterventionCondition;
     public TMP_Text timer;
-    public GameObject path;
-    public GameObject Target;
     public GameObject userPanel;
     public TMP_InputField usernameInput;
     public GameObject feedback;
+    public GameObject rest;
+    public GameObject TaskComplete;
+    public GameObject Next;
+
+    [Header("Experiment Settings")]
+    public GameObject baselineCondition;
+    public GameObject interventionCondition;
+    public GameObject nonInterventionCondition;
+    public GameObject path;
+    public GameObject Target;
+    public GameObject weight;
+
+    [Header("Pickup Messages")]
+    public GameObject Pickupmessage_Tennis;
+    public GameObject Pickupmessage_Smily;
+    public GameObject Pickupmessage_Heavy;
+
+    [Header("Animators")]
+    public Animator AniCondition1;
+    public Animator AniCondition2;
+    public Animator AniCondition3;
+
+    [Header("Control Variables")]
     public int response;
+    public bool next = false;
+
+    // Private variables
     private GameObject[] Conditions;
     private List<GameObject> remainingConditions;
     private int[] conditionCounts;
     private GameObject currentCondition;
     private string filePath;
+    [Header("Wait Variables")]
     public bool buttonPressed = false;
     public bool restActive = false;
     public bool BallPicked = false;
-    public GameObject rest;
-    public GameObject Pickupmessage_Tennis;
-    public GameObject Pickupmessage_Smily;
-    public GameObject Pickupmessage_Heavy;
-    public Animator AniCondition1;
-    public Animator AniCondition2;
-    public Animator AniCondition3;
-    public GameObject TaskComplete;
-    public GameObject weight;
-    public GameObject Next;
-    public bool next=false;
     void Start()
     {
         RestText.SetActive(false);
@@ -77,12 +93,14 @@ public class ProjectManager_Block : MonoBehaviour
     }
 
     IEnumerator StartExperiment()
-    {
-        GameObject baseLineBall = GameObject.Find("BaseLineBall");
-        LEDNode lEDNode= baseLineBall.GetComponentInChildren<LEDNode>();
+    {   GameObject interventionBall = GameObject.Find("InterventionBall");
         GameObject nonInterventionBall = GameObject.Find("NonInterventionBall");
+        GameObject baseLineBall = GameObject.Find("BaseLineBall");
+        InteractionBehaviour interactionBehaviour= interventionBall.GetComponent<InteractionBehaviour>();
+        InteractionBehaviour interactionBehaviour2= nonInterventionBall.GetComponent<InteractionBehaviour>();
+        InteractionBehaviour interactionBehaviour3= baseLineBall.GetComponent<InteractionBehaviour>();
+        LEDNode lEDNode= baseLineBall.GetComponentInChildren<LEDNode>();
         LEDNode lEDNode1= nonInterventionBall.GetComponentInChildren<LEDNode>();
-        GameObject interventionBall = GameObject.Find("InterventionBall");
         LEDNode lEDNode2= interventionBall.GetComponentInChildren<LEDNode>();
         int count = 0;
         GameObject weight = GameObject.Find("weights");
@@ -92,56 +110,70 @@ public class ProjectManager_Block : MonoBehaviour
         {   Debug.Log("Next task Loading");
             Next.SetActive(true);
             yield return new WaitUntil(() => next);
+            Next.SetActive(false);
             Debug.Log("Pick Up The Weight");
             Debug.Log("Experiment Number: " + count);
             DefaultCamera.SetActive(false);
             currentCondition = null;
+            Pickupmessage_Tennis.SetActive(false);
+            Pickupmessage_Smily.SetActive(false);
+            Pickupmessage_Heavy.SetActive(false);
+            interactionBehaviour2.enabled=false;
+            interactionBehaviour.enabled=false;
+            interactionBehaviour3.enabled=false;
+            lEDNode1.enabled = false;
+            lEDNode2.enabled = false;
+            lEDNode.enabled = false;
             switch (task)
             {
                 case "a":
                     currentCondition = baselineCondition;
                     Debug.Log("Current Condition: baselineCondition");
                     Pickupmessage_Smily.SetActive(true);
-                    lEDNode1.enabled = false;
-                    lEDNode2.enabled = false;
                     lEDNode.enabled = true;
+                    interactionBehaviour3.enabled=true;
                     break;
                 case "b":
                     currentCondition = interventionCondition;
                     Debug.Log("Current Condition: interventionCondition");
-                    Pickupmessage_Tennis.SetActive(true);
-                    lEDNode.enabled = false;
-                    lEDNode2.enabled = false;
-                    lEDNode1.enabled = true;
+                    Pickupmessage_Heavy.SetActive(true);
+                    lEDNode2.enabled = true;
+                    interactionBehaviour.enabled=true;
                     break;
                 case "c":
                     currentCondition = nonInterventionCondition;
                     Debug.Log("Current Condition: nonInterventionCondition");
-                    Pickupmessage_Heavy.SetActive(true);
-                    lEDNode.enabled = false;
-                    lEDNode1.enabled = false;
-                    lEDNode2.enabled = true;
+                    Pickupmessage_Tennis.SetActive(true);
+                    lEDNode1.enabled = true;
+                    interactionBehaviour2.enabled=true;
                     break;
             }
             DefaultCamera.SetActive(false);
             currentCondition.SetActive(true);
+            UltraLeapManager.SetActive(true);
             //weight.SetActive(true);
             BallPicked = false;
             resetWeight.reset= true;
             Debug.Log("Picking Ball for iteration "+ count);
             yield return new WaitUntil(() => BallPicked);
+            lEDNode1.enabled = false;
+            lEDNode2.enabled = false;
+            lEDNode.enabled = false;
             Debug.Log("Weight is been picked");   
             path.SetActive(true);
             Target.SetActive(true);
             Debug.Log("Experiment Initialized:]");
             //Active Time of the Condition
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(20f);
             TaskComplete.SetActive(true);
             Target.SetActive(false);
             path.SetActive(false);
             currentCondition.SetActive(false);
+            UltraLeapManager.SetActive(false);
             Debug.Log(currentCondition + "  is over");
             TaskComplete.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            TaskComplete.SetActive(false);
             feedback.SetActive(true);
             DefaultCamera.SetActive(true);
             Debug.Log("fedback done");
@@ -156,8 +188,6 @@ public class ProjectManager_Block : MonoBehaviour
             BallPicked = false;
             restActive = false;
             rest.SetActive(false);
-            Next.SetActive(true);
-            yield return new WaitUntil(() => next);
             buttonPressed=false;
         }
             AniCondition1.Play("cubef");
