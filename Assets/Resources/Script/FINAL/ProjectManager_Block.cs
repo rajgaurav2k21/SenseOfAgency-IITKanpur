@@ -59,6 +59,9 @@ public class ProjectManager_Block : MonoBehaviour
     public bool BallPicked = false;
     void Start()
     {
+        baselineCondition.SetActive(false);
+        interventionCondition.SetActive(false);
+        nonInterventionCondition.SetActive(false);
         RestText.SetActive(false);
         TaskComplete.SetActive(false);
         Pickupmessage_Tennis.SetActive(false);

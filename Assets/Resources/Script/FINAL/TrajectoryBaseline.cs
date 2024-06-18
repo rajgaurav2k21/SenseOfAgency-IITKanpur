@@ -18,7 +18,7 @@ public class TrajectoryBaseline : MonoBehaviour
             ProjectManager_Block projectManager_block = experimentManager_block.GetComponent<ProjectManager_Block>();
             if (projectManager_block != null && projectManager_block.usernameInput != null)
             {
-                username = projectManager_block.usernameInput.text; // Assuming usernameInput is a TMP_InputField
+                username = projectManager_block.usernameInput.text;
             }
             else
             {
