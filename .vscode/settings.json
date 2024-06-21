@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "SenseOfAgency-IITKanpur.sln"
+    "dotnet.defaultSolution": "RG_EXE.sln"
 }

@@ -12,8 +12,6 @@ public class Path : MonoBehaviour
     {
         lineRenderer.positionCount = numberOfPoints;
         initialPositions = new Vector3[numberOfPoints];
-
-        // Store the initial positions of the points
         for (int i = 0; i < numberOfPoints; i++)
         {
             float t = Mathf.PI * 2 * i / (numberOfPoints - 1);
@@ -26,17 +24,14 @@ public class Path : MonoBehaviour
 
     void Update()
     {
-        // Get the position, rotation, and scale of the empty GameObject
         Vector3 emptyPosition = transform.position;
         Quaternion emptyRotation = transform.rotation;
         Vector3 emptyScale = transform.localScale;
-
-        // Offset the positions of the points based on the difference between their initial positions and the empty object's position, rotation, and scale
         for (int i = 0; i < numberOfPoints; i++)
         {
             Vector3 pointPosition = initialPositions[i];
-            pointPosition = Vector3.Scale(pointPosition, emptyScale); // Scale the point based on the empty object's scale
-            pointPosition = emptyRotation * pointPosition; // Rotate the point based on the empty object's rotation
+            pointPosition = Vector3.Scale(pointPosition, emptyScale);
+            pointPosition = emptyRotation * pointPosition;
             lineRenderer.SetPosition(i, pointPosition + emptyPosition);
         }
     }

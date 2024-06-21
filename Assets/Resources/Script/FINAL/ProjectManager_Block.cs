@@ -38,11 +38,6 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject Pickupmessage_Smily;
     public GameObject Pickupmessage_Heavy;
 
-    [Header("Animators")]
-    public Animator AniCondition1;
-    public Animator AniCondition2;
-    public Animator AniCondition3;
-
     [Header("Control Variables")]
     public int response;
     public bool next = false;
@@ -193,10 +188,6 @@ public class ProjectManager_Block : MonoBehaviour
             rest.SetActive(false);
             buttonPressed=false;
         }
-            AniCondition1.Play("cubef");
-            AniCondition2.Play("cubef");
-            AniCondition3.Play("cubef");
-
         Debug.Log("Experiment Complete.");
         COMPLETE.SetActive(true);
     }
