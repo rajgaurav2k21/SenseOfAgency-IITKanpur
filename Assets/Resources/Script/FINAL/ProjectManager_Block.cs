@@ -97,9 +97,6 @@ public class ProjectManager_Block : MonoBehaviour
         InteractionBehaviour interactionBehaviour= interventionBall.GetComponent<InteractionBehaviour>();
         InteractionBehaviour interactionBehaviour2= nonInterventionBall.GetComponent<InteractionBehaviour>();
         InteractionBehaviour interactionBehaviour3= baseLineBall.GetComponent<InteractionBehaviour>();
-        LEDNode lEDNode= baseLineBall.GetComponentInChildren<LEDNode>();
-        LEDNode lEDNode1= nonInterventionBall.GetComponentInChildren<LEDNode>();
-        LEDNode lEDNode2= interventionBall.GetComponentInChildren<LEDNode>();
         int count = 0;
         GameObject weight = GameObject.Find("weights");
         ResetWeight resetWeight= weight.GetComponent<ResetWeight>();
@@ -119,30 +116,24 @@ public class ProjectManager_Block : MonoBehaviour
             interactionBehaviour2.enabled=false;
             interactionBehaviour.enabled=false;
             interactionBehaviour3.enabled=false;
-            lEDNode1.enabled = false;
-            lEDNode2.enabled = false;
-            lEDNode.enabled = false;
             switch (task)
             {
                 case "a":
                     currentCondition = baselineCondition;
                     Debug.Log("Current Condition: baselineCondition");
                     Pickupmessage_Smily.SetActive(true);
-                    lEDNode.enabled = true;
                     interactionBehaviour3.enabled=true;
                     break;
                 case "b":
                     currentCondition = interventionCondition;
                     Debug.Log("Current Condition: interventionCondition");
                     Pickupmessage_Heavy.SetActive(true);
-                    lEDNode2.enabled = true;
                     interactionBehaviour.enabled=true;
                     break;
                 case "c":
                     currentCondition = nonInterventionCondition;
                     Debug.Log("Current Condition: nonInterventionCondition");
                     Pickupmessage_Tennis.SetActive(true);
-                    lEDNode1.enabled = true;
                     interactionBehaviour2.enabled=true;
                     break;
             }
@@ -154,9 +145,6 @@ public class ProjectManager_Block : MonoBehaviour
             resetWeight.reset= true;
             Debug.Log("Picking Ball for iteration "+ count);
             yield return new WaitUntil(() => BallPicked);
-            lEDNode1.enabled = false;
-            lEDNode2.enabled = false;
-            lEDNode.enabled = false;
             Debug.Log("Weight is been picked");   
             path.SetActive(true);
             Target.SetActive(true);
