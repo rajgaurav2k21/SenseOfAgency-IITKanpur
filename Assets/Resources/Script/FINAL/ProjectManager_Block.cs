@@ -52,6 +52,7 @@ public class ProjectManager_Block : MonoBehaviour
     public bool buttonPressed = false;
     public bool restActive = false;
     public bool BallPicked = false;
+    public bool Startboolean = false;
     void Start()
     {
         baselineCondition.SetActive(false);
@@ -75,6 +76,13 @@ public class ProjectManager_Block : MonoBehaviour
         weight.SetActive(true);
         BallPicked = false;
         Next.SetActive(false);
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && Startboolean)
+            {
+                StartExp();
+            }
     }
 
     private void Awake()
@@ -189,8 +197,10 @@ public class ProjectManager_Block : MonoBehaviour
 
     public void OpenInfoPanel()
     {
+        Debug.Log("OpenInfoPanel called");
         Name.SetActive(false);
         InfoPanel.SetActive(true);
+        Startboolean = true;
     }
     public void SaveToCSV(string username, string conditionName, float response)
     {
