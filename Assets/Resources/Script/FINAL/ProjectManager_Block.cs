@@ -35,6 +35,11 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject path;
     public GameObject Target;
     public GameObject weight;
+    [Header("SubCOnditions")]
+    public GameObject wind;
+    public GameObject delay;
+    public GameObject SpartialOffset;
+    public GameObject DynamicSpartialOffset;
 
     [Header("Pickup Messages")]
     public GameObject Pickupmessage_Tennis;
