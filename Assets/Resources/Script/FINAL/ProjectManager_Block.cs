@@ -5,6 +5,7 @@ using TMPro;
 using System.IO;
 using System.Text;
 using Leap.Unity.Interaction;
+using System.Collections.Generic;
 public class ProjectManager_Block : MonoBehaviour
 {
     [Header("Made by RAJ GAURAV")]
@@ -15,6 +16,8 @@ public class ProjectManager_Block : MonoBehaviour
     [Header("UI Elements")]
     public GameObject RestText;
     public GameObject DefaultCamera;
+    public GameObject EndingFeedback;
+
     public GameObject COMPLETE;
     public GameObject InfoPanel;
     public GameObject Name;
@@ -29,22 +32,26 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject Experience;
 
     [Header("Experiment Settings")]
-    public GameObject baselineCondition;
-    public GameObject interventionCondition;
-    public GameObject nonInterventionCondition;
+    public GameObject BaselineConditionNoWeight;
+    public GameObject NonInterventionCondition;
+    public GameObject InterventionConditionMidpoint;
+    public GameObject InterventionConditionLagWeighted;
+    public GameObject InterventionConditionLagNonWeighted;
+    public GameObject InterventionConditionSpatialOffsetWeighted;
+    public GameObject InterventionConditionSpatialOffsetNonWeighted;
+    public GameObject InterventionConditionDynamicSpatialOffsetWeighted;
+    public GameObject InterventionConditionDynamicSpatialOffsetNonWeighted;
+    public GameObject InterventionConditionWindNoiseWeighted;
+    public GameObject InterventionConditionWindNoiseNonWeighted;
+
+
     public GameObject path;
     public GameObject Target;
     public GameObject weight;
-    [Header("SubCOnditions")]
-    public GameObject wind;
-    public GameObject delay;
-    public GameObject SpartialOffset;
-    public GameObject DynamicSpartialOffset;
 
     [Header("Pickup Messages")]
-    public GameObject Pickupmessage_Tennis;
-    public GameObject Pickupmessage_Smily;
-    public GameObject Pickupmessage_Heavy;
+    public GameObject Pickupmessage_LightWeight;
+    public GameObject Pickupmessage_HeavyWeight;
 
     [Header("Control Variables")]
     public int response;
@@ -62,16 +69,32 @@ public class ProjectManager_Block : MonoBehaviour
     public bool BallPicked = false;
     public bool Startboolean = false;
     public bool ExperiencePicked = false;
+    public bool FeedbackendGiven = false;
+    private List<string> pathNames = new List<string>{
+    "CircularPath",
+    "Eight",
+    "SpiralPath",
+    "StarPath",
+    "TriangularPath"
+    };
     void Start()
     {
-        baselineCondition.SetActive(false);
-        interventionCondition.SetActive(false);
-        nonInterventionCondition.SetActive(false);
+        EndingFeedback.SetActive(false);
+        BaselineConditionNoWeight.SetActive(false);
+        NonInterventionCondition.SetActive(false);
+        InterventionConditionMidpoint.SetActive(false);
+        InterventionConditionLagWeighted.SetActive(false);
+        InterventionConditionLagNonWeighted.SetActive(false);
+        InterventionConditionSpatialOffsetWeighted.SetActive(false);
+        InterventionConditionSpatialOffsetNonWeighted.SetActive(false);
+        InterventionConditionDynamicSpatialOffsetWeighted.SetActive(false);
+        InterventionConditionDynamicSpatialOffsetNonWeighted.SetActive(false);
+        InterventionConditionWindNoiseWeighted.SetActive(false);
+        InterventionConditionWindNoiseNonWeighted.SetActive(false);
         RestText.SetActive(false);
         TaskComplete.SetActive(false);
-        Pickupmessage_Tennis.SetActive(false);
-        Pickupmessage_Smily.SetActive(false);
-        Pickupmessage_Heavy.SetActive(false);
+        Pickupmessage_LightWeight.SetActive(false);
+        Pickupmessage_HeavyWeight.SetActive(false);
         userPanel.SetActive(true);
         Target.SetActive(false);
         path.SetActive(false);
@@ -79,7 +102,19 @@ public class ProjectManager_Block : MonoBehaviour
         DefaultCamera.SetActive(true);
         InfoPanel.SetActive(false);
         COMPLETE.SetActive(false);
-        Conditions = new GameObject[] { baselineCondition, interventionCondition, nonInterventionCondition };
+        GameObject[] Conditions = new GameObject[] {
+        BaselineConditionNoWeight,
+        NonInterventionCondition,
+        InterventionConditionMidpoint,
+        InterventionConditionLagWeighted,
+        InterventionConditionLagNonWeighted,
+        InterventionConditionSpatialOffsetWeighted,
+        InterventionConditionSpatialOffsetNonWeighted,
+        InterventionConditionDynamicSpatialOffsetWeighted,
+        InterventionConditionDynamicSpatialOffsetNonWeighted,
+        InterventionConditionWindNoiseWeighted,
+        InterventionConditionWindNoiseNonWeighted
+        };
         remainingConditions = new List<GameObject>(Conditions);
         conditionCounts = new int[Conditions.Length];
         weight.SetActive(true);
@@ -90,9 +125,9 @@ public class ProjectManager_Block : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && Startboolean)
-            {
-                StartExp();
-            }
+        {
+            StartExp();
+        }
     }
 
     private void Awake()
@@ -109,18 +144,40 @@ public class ProjectManager_Block : MonoBehaviour
     }
 
     IEnumerator StartExperiment()
-    {   GameObject interventionBall = GameObject.Find("InterventionBall");
-        GameObject nonInterventionBall = GameObject.Find("NonInterventionBall");
-        GameObject baseLineBall = GameObject.Find("BaseLineBall");
-        InteractionBehaviour interactionBehaviour= interventionBall.GetComponent<InteractionBehaviour>();
-        InteractionBehaviour interactionBehaviour2= nonInterventionBall.GetComponent<InteractionBehaviour>();
-        InteractionBehaviour interactionBehaviour3= baseLineBall.GetComponent<InteractionBehaviour>();
+    {
+        GameObject Path = GameObject.Find("PATH");
+        StarPath starPath = Path.GetComponent<StarPath>();
+        SpiralPath spiralPath = Path.GetComponent<SpiralPath>();
+        Path pathScript = Path.GetComponent<Path>();
+        CircularPath circularPath = Path.GetComponent<CircularPath>();
+        TriangularPath triangularPath = Path.GetComponent<TriangularPath>();
+        string randomPathName = pathNames[Random.Range(0, pathNames.Count)];
+
+        switch (randomPathName)
+        {
+            case "CircularPath":
+                circularPath.gameObject.SetActive(true);
+                break;
+            case "Eight":
+                starPath.gameObject.SetActive(true);
+                break;
+            case "SpiralPath":
+                spiralPath.gameObject.SetActive(true);
+                break;
+            case "StarPath":
+                pathScript.gameObject.SetActive(true);
+                break;
+            case "TriangularPath":
+                triangularPath.gameObject.SetActive(true);
+                break;
+        }
         int count = 0;
         GameObject weight = GameObject.Find("weights");
-        ResetWeight resetWeight= weight.GetComponent<ResetWeight>();
-        string[] taskOrder = new string[] { "b", "c", "a", "c", "c", "a", "b", "b", "a", "c", "b", "a", "a", "c", "b", "c", "b", "a" };
+        ResetWeight resetWeight = weight.GetComponent<ResetWeight>();
+        string[] taskOrder = new string[] { "a", "h", "c", "j", "e", "f", "d", "b", "g", "i", "k", "j", "d", "h", "k", "g", "c", "a", "b", "i", "e", "f", "g", "a", "b", "f", "e", "k", "c", "i", "h", "d", "j", "a", "g", "j", "b", "d", "e", "i", "k", "f", "h", "c" };
         foreach (string task in taskOrder)
-        {   Debug.Log("Next task Loading");
+        {
+            Debug.Log("Next task Loading");
             Next.SetActive(true);
             yield return new WaitUntil(() => next);
             Next.SetActive(false);
@@ -128,42 +185,86 @@ public class ProjectManager_Block : MonoBehaviour
             Debug.Log("Experiment Number: " + count);
             DefaultCamera.SetActive(false);
             currentCondition = null;
-            Pickupmessage_Tennis.SetActive(false);
-            Pickupmessage_Smily.SetActive(false);
-            Pickupmessage_Heavy.SetActive(false);
-            interactionBehaviour2.enabled=false;
-            interactionBehaviour.enabled=false;
-            interactionBehaviour3.enabled=false;
+            Pickupmessage_LightWeight.SetActive(false);
+            Pickupmessage_HeavyWeight.SetActive(false);
             switch (task)
             {
                 case "a":
-                    currentCondition = baselineCondition;
-                    Debug.Log("Current Condition: baselineCondition");
-                    Pickupmessage_Smily.SetActive(true);
-                    interactionBehaviour3.enabled=true;
+                    currentCondition = BaselineConditionNoWeight;
+                    Pickupmessage_LightWeight.SetActive(true);
+                    Debug.Log("Current Condition: BaselineConditionNoWeight");
                     break;
+
                 case "b":
-                    currentCondition = interventionCondition;
-                    Debug.Log("Current Condition: interventionCondition");
-                    Pickupmessage_Heavy.SetActive(true);
-                    interactionBehaviour.enabled=true;
+                    currentCondition = NonInterventionCondition;
+                    Pickupmessage_HeavyWeight.SetActive(true);
+                    Debug.Log("Current Condition: NonInterventionCondition");
                     break;
+
                 case "c":
-                    currentCondition = nonInterventionCondition;
-                    Debug.Log("Current Condition: nonInterventionCondition");
-                    Pickupmessage_Tennis.SetActive(true);
-                    interactionBehaviour2.enabled=true;
+                    currentCondition = InterventionConditionMidpoint;
+                    Pickupmessage_LightWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionMidpoint");
+                    break;
+
+                case "d":
+                    currentCondition = InterventionConditionLagWeighted;
+                    Pickupmessage_HeavyWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionLagWeighted");
+                    break;
+
+                case "e":
+                    currentCondition = InterventionConditionLagNonWeighted;
+                    Pickupmessage_LightWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionLagNonWeighted");
+                    break;
+
+                case "f":
+                    currentCondition = InterventionConditionSpatialOffsetWeighted;
+                    Pickupmessage_HeavyWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionSpatialOffsetWeighted");
+                    break;
+
+                case "g":
+                    currentCondition = InterventionConditionSpatialOffsetNonWeighted;
+                    Pickupmessage_LightWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionSpatialOffsetNonWeighted");
+                    break;
+
+                case "h":
+                    currentCondition = InterventionConditionDynamicSpatialOffsetWeighted;
+                    Pickupmessage_HeavyWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetWeighted");
+                    break;
+
+                case "i":
+                    currentCondition = InterventionConditionDynamicSpatialOffsetNonWeighted;
+                    Pickupmessage_LightWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetNonWeighted");
+                    break;
+
+                case "j":
+                    currentCondition = InterventionConditionWindNoiseWeighted;
+                    Pickupmessage_HeavyWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionWindNoiseWeighted");
+                    break;
+
+                case "k":
+                    currentCondition = InterventionConditionWindNoiseNonWeighted;
+                    Pickupmessage_LightWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionWindNoiseNonWeighted");
                     break;
             }
+
             DefaultCamera.SetActive(false);
             currentCondition.SetActive(true);
             UltraLeapManager.SetActive(true);
             weight.SetActive(true);
             BallPicked = false;
-            resetWeight.reset= true;
-            Debug.Log("Picking Ball for iteration "+ count);
+            resetWeight.reset = true;
+            Debug.Log("Picking Ball for iteration " + count);
             yield return new WaitUntil(() => BallPicked);
-            Debug.Log("Weight is been picked");   
+            Debug.Log("Weight is been picked");
             path.SetActive(true);
             Target.SetActive(true);
             Debug.Log("Experiment Initialized:]");
@@ -192,9 +293,12 @@ public class ProjectManager_Block : MonoBehaviour
             BallPicked = false;
             restActive = false;
             rest.SetActive(false);
-            buttonPressed=false;
+            buttonPressed = false;
         }
         Debug.Log("Experiment Complete.");
+        EndingFeedback.SetActive(true);
+        yield return new WaitUntil(() => FeedbackendGiven);
+        EndingFeedback.SetActive(false);
         COMPLETE.SetActive(true);
     }
 
