@@ -5,9 +5,10 @@ using TMPro;
 using System.IO;
 using System.Text;
 using Leap.Unity.Interaction;
-
 public class ProjectManager_Block : MonoBehaviour
 {
+    [Header("Made by RAJ GAURAV")]
+
     [Header("UltraLeap Manager")]
     public GameObject UltraLeapManager;
 
@@ -24,6 +25,8 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject rest;
     public GameObject TaskComplete;
     public GameObject Next;
+
+    public GameObject Experience;
 
     [Header("Experiment Settings")]
     public GameObject baselineCondition;
@@ -53,6 +56,7 @@ public class ProjectManager_Block : MonoBehaviour
     public bool restActive = false;
     public bool BallPicked = false;
     public bool Startboolean = false;
+    public bool ExperiencePicked = false;
     void Start()
     {
         baselineCondition.SetActive(false);
@@ -76,6 +80,7 @@ public class ProjectManager_Block : MonoBehaviour
         weight.SetActive(true);
         BallPicked = false;
         Next.SetActive(false);
+        Experience.SetActive(false);
     }
     void Update()
     {
@@ -148,7 +153,7 @@ public class ProjectManager_Block : MonoBehaviour
             DefaultCamera.SetActive(false);
             currentCondition.SetActive(true);
             UltraLeapManager.SetActive(true);
-            //weight.SetActive(true);
+            weight.SetActive(true);
             BallPicked = false;
             resetWeight.reset= true;
             Debug.Log("Picking Ball for iteration "+ count);
@@ -199,6 +204,14 @@ public class ProjectManager_Block : MonoBehaviour
     {
         Debug.Log("OpenInfoPanel called");
         Name.SetActive(false);
+        userPanel.SetActive(false);
+        StartCoroutine(ExperienceCoroutine());
+    }
+    IEnumerator ExperienceCoroutine()
+    {
+        Experience.SetActive(true);
+        yield return new WaitUntil(() => ExperiencePicked);
+        userPanel.SetActive(true);
         InfoPanel.SetActive(true);
         Startboolean = true;
     }
