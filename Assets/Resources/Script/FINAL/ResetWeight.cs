@@ -6,7 +6,6 @@ public class ResetWeight : MonoBehaviour
 {
     public GameObject weight1;
     public GameObject weight2;
-    public GameObject weight3;
     public bool reset = true;
 
     void Update()

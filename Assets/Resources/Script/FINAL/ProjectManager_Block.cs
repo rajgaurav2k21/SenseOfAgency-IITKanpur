@@ -320,6 +320,7 @@ public class ProjectManager_Block : MonoBehaviour
     {
         Experience.SetActive(true);
         yield return new WaitUntil(() => ExperiencePicked);
+        Experience.SetActive(false);
         userPanel.SetActive(true);
         InfoPanel.SetActive(true);
         Startboolean = true;
