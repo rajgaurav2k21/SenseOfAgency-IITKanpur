@@ -70,13 +70,7 @@ public class ProjectManager_Block : MonoBehaviour
     public bool Startboolean = false;
     public bool ExperiencePicked = false;
     public bool FeedbackendGiven = false;
-    private List<string> pathNames = new List<string>{
-    "CircularPath",
-    "Eight",
-    "SpiralPath",
-    "StarPath",
-    "TriangularPath"
-    };
+    public bool PathEnabled=false;
     void Start()
     {
         EndingFeedback.SetActive(false);
@@ -145,32 +139,6 @@ public class ProjectManager_Block : MonoBehaviour
 
     IEnumerator StartExperiment()
     {
-        GameObject Path = GameObject.Find("PATH");
-        StarPath starPath = Path.GetComponent<StarPath>();
-        SpiralPath spiralPath = Path.GetComponent<SpiralPath>();
-        Path pathScript = Path.GetComponent<Path>();
-        CircularPath circularPath = Path.GetComponent<CircularPath>();
-        TriangularPath triangularPath = Path.GetComponent<TriangularPath>();
-        string randomPathName = pathNames[Random.Range(0, pathNames.Count)];
-
-        switch (randomPathName)
-        {
-            case "CircularPath":
-                circularPath.gameObject.SetActive(true);
-                break;
-            case "Eight":
-                starPath.gameObject.SetActive(true);
-                break;
-            case "SpiralPath":
-                spiralPath.gameObject.SetActive(true);
-                break;
-            case "StarPath":
-                pathScript.gameObject.SetActive(true);
-                break;
-            case "TriangularPath":
-                triangularPath.gameObject.SetActive(true);
-                break;
-        }
         int count = 0;
         GameObject weight = GameObject.Find("weights");
         ResetWeight resetWeight = weight.GetComponent<ResetWeight>();

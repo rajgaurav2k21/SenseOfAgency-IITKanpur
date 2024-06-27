@@ -2,26 +2,66 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
-    public LineRenderer pathRenderer;
+    public LineRenderer starpathRenderer;
+    public LineRenderer spiralpathRenderer;
+    public LineRenderer eightpathRenderer;
+    public LineRenderer circularpathRenderer;
+    public LineRenderer triangularpathRenderer;
+
     public float speed = 2f;
 
+    private LineRenderer pathRenderer;
     private int currentPointIndex = 0;
     private float distanceToNextPoint = 0f;
 
     void Start()
     {
-        if (pathRenderer.positionCount < 2)
-            return;
-
-        RecalculateDistanceToNextPoint();
+        SetPathRenderer();
     }
 
     void Update()
     {
-        if (pathRenderer.positionCount < 2)
+        if (pathRenderer == null || pathRenderer.positionCount < 2)
+        {
             return;
+        }
 
         MoveAlongPath();
+    }
+
+    public void SetPathRenderer()
+    {
+        pathRenderer = null;
+
+        if (starpathRenderer.enabled)
+        {
+            pathRenderer = starpathRenderer;
+        }
+        else if (spiralpathRenderer.enabled)
+        {
+            pathRenderer = spiralpathRenderer;
+        }
+        else if (eightpathRenderer.enabled)
+        {
+            pathRenderer = eightpathRenderer;
+        }
+        else if (circularpathRenderer.enabled)
+        {
+            pathRenderer = circularpathRenderer;
+        }
+        else if (triangularpathRenderer.enabled)
+        {
+            pathRenderer = triangularpathRenderer;
+        }
+
+        if (pathRenderer == null || pathRenderer.positionCount < 2)
+        {
+            return;
+        }
+
+        currentPointIndex = 0;
+        distanceToNextPoint = 0f;
+        RecalculateDistanceToNextPoint();
     }
 
     void MoveAlongPath()

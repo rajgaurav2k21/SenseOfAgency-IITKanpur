@@ -35,8 +35,11 @@ public class CircularPath : MonoBehaviour
         for (int i = 0; i < numberOfPoints; i++)
         {
             Vector3 pointPosition = positions[i];
+            // Apply scale
             pointPosition = Vector3.Scale(pointPosition, pathScale);
+            // Apply rotation
             pointPosition = pathRotation * pointPosition;
+            // Update LineRenderer positions
             lineRenderer.SetPosition(i, pointPosition + pathPosition);
         }
     }
