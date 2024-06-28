@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PathManager : MonoBehaviour
 {
+    public ProjectManager_Block projectManager_Block;
     public BallMovement ballManager;
     public GameObject starPathObject;
     public GameObject spiralPathObject;
@@ -35,6 +36,7 @@ public class PathManager : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitUntil(() => projectManager_Block.PathEnabled);
             int newIndex = Random.Range(0, 5);
             DisableAllPaths();
             switch (newIndex)

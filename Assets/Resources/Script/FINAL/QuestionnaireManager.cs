@@ -2,10 +2,12 @@ using UnityEngine;
 using TMPro;
 using System.IO;
 using System.Text;
-using System.Collections.Generic;
 
 public class QuestionnaireManager : MonoBehaviour
 {
+    public GameObject feedback;
+    public bool ResetFB = false;
+    public ProjectManager_Block projectManager_block;
     public TMP_InputField inputField1;
     public TMP_InputField inputField2;
     public TMP_InputField inputField3;
@@ -27,77 +29,128 @@ public class QuestionnaireManager : MonoBehaviour
 
     private void Start()
     {
-        filePathResponse = Application.dataPath + "/CSV/response.csv";
+        // Set the file path for saving responses
+        filePathResponse = Application.persistentDataPath + "/UserResponse.csv";
 
+        // Create directory if it doesn't exist
+        Directory.CreateDirectory(Application.persistentDataPath);
+
+        // Initialize inputFields array
+        inputFields = new TMP_InputField[] { inputField1, inputField2, inputField3, inputField4, inputField5 };
+
+        // Set initial UI state
+        Panel2.SetActive(false);
+        ActivateCurrentInputField();
+
+        // Set question texts
         questionText1.text = "Question 1: How responsive was the virtual environment to the actions you initiated?";
         questionText2.text = "Question 2: How much ownership did you feel?";
         questionText3.text = "Question 3: How confident did you feel when placing objects in the grid?";
         questionText4.text = "Question 4: How much lag do you think your actions had in VR?";
         questionText5.text = "Question 5: How much leading do you think your actions had compared to your proprioception in VR?";
-
-        Panel2.SetActive(false);
-
-        inputFields = new TMP_InputField[] { inputField1, inputField2, inputField3, inputField4, inputField5 };
-        inputFields[currentQuestionIndex].ActivateInputField();
     }
 
     private void Update()
     {
+        // Check for Enter key press to move to the next question
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            SaveCurrentAnswer();
-            currentQuestionIndex++;
             if (currentQuestionIndex < inputFields.Length)
             {
-                inputFields[currentQuestionIndex].ActivateInputField();
+                SaveCurrentAnswer();
+                currentQuestionIndex++;
+                if (currentQuestionIndex < inputFields.Length)
+                {
+                    ActivateCurrentInputField();
+                }
+                else
+                {
+                    SaveAllAnswers();
+                    ResetQuestionnaire();
+                }
             }
-            else
-            {
-                SaveAllAnswers();
-            }
+        }
+        //projectManager_block.RestActiveBool=false;
+        // Check for Space key press to hide feedback panel
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            feedback.SetActive(false);
+            projectManager_block.buttonPressed = true;
+        }
+    }
+
+    private void ActivateCurrentInputField()
+    {
+        // Deactivate all input fields first
+        foreach (var inputField in inputFields)
+        {
+            inputField.DeactivateInputField();
+        }
+
+        // Activate the current input field
+        if (currentQuestionIndex < inputFields.Length)
+        {
+            inputFields[currentQuestionIndex].ActivateInputField();
+            inputFields[currentQuestionIndex].Select();
         }
     }
 
     private void SaveCurrentAnswer()
     {
-        string answer = inputFields[currentQuestionIndex].text;
-
-        if (currentQuestionIndex == 2)
+        // Ensure currentQuestionIndex is within bounds
+        if (currentQuestionIndex < inputFields.Length)
         {
-            Panel2.SetActive(true);
-            Panel1.SetActive(false);
+            string answer = inputFields[currentQuestionIndex].text;
+            Debug.Log($"Saved answer for question {currentQuestionIndex + 1}: {answer}");
+
+            // Switch panels after saving answer for question 3
+            if (currentQuestionIndex == 2)
+            {
+                Panel2.SetActive(true);
+                Panel1.SetActive(false);
+            }
         }
     }
 
     private void SaveAllAnswers()
     {
-        List<string> existingLines = new List<string>();
-        if (File.Exists(filePathResponse))
-        {
-            using (StreamReader sr = new StreamReader(filePathResponse))
-            {
-                string line;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    existingLines.Add(line);
-                }
-            }
-        }
-
+        // Prepare CSV content
         StringBuilder csvContent = new StringBuilder();
+        csvContent.AppendLine("Username,Condition,Question1,Question2,Question3,Question4,Question5");
 
-        for (int i = 0; i < inputFields.Length; i++)
-        {
-            csvContent.AppendLine($"\"{inputFields[i].transform.parent.GetComponentInChildren<TMP_Text>().text}\",\"{inputFields[i].text}\"");
-        }
+        // Append user responses
+        csvContent.AppendLine($"\"{projectManager_block.usernameInput.text}\",\"{projectManager_block.GetcurrentCondition()}\"," +
+            $"\"{inputFields[0].text}\",\"{inputFields[1].text}\",\"{inputFields[2].text}\",\"{inputFields[3].text}\",\"{inputFields[4].text}\"");
 
+        // Write to CSV file
         using (StreamWriter sw = new StreamWriter(filePathResponse, true, Encoding.UTF8))
         {
-            foreach (string line in existingLines)
-            {
-                sw.WriteLine(line);
-            }
-            sw.Write(csvContent.ToString().TrimEnd());
+            sw.WriteLine(csvContent.ToString().TrimEnd());
+        }
+
+        Debug.Log("All answers saved to CSV.");
+    }
+
+    private void ResetQuestionnaire()
+    {
+        if(ResetFB)
+        {
+        // Reset currentQuestionIndex and clear input fields
+        currentQuestionIndex = 0;
+        foreach (var inputField in inputFields)
+        {
+            inputField.text = "";
+            inputField.DeactivateInputField();
+        }
+
+        // Switch panels back to the initial state
+        Panel1.SetActive(true);
+        Panel2.SetActive(false);
+
+        // Activate the first input field
+        ActivateCurrentInputField();
+
+        Debug.Log("Questionnaire has been reset.");
         }
     }
 }

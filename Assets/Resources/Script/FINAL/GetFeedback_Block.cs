@@ -20,9 +20,9 @@ public class GetFeedback_Block : MonoBehaviour
         float response;
         response=feedbackSlider.value;
         Debug.Log("Your Response is  " + response);
-        projectManager_block.SaveToCSV(username, conditionName,response);
+        //projectManager_block.SaveToCSV(username, conditionName,response);
         projectManager_block.buttonPressed = true;
         feedback.SetActive(false);
-        feedbackSlider.value = feedbackSlider.minValue;;
+        feedbackSlider.value = feedbackSlider.minValue;
     }
 }

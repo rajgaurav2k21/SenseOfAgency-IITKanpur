@@ -81,6 +81,7 @@ public class Dizzy : MonoBehaviour
 
     void ContinueGame()
     {
+        projectManager_Block.Startboolean = true;
         projectManager_Block.ExperiencePicked=true;
         string username = projectManager_Block.usernameInput.text; 
         int everUsedState = everUsed.everUsed;

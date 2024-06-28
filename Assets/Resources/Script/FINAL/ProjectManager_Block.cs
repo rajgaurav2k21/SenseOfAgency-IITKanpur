@@ -15,7 +15,6 @@ public class ProjectManager_Block : MonoBehaviour
 
     [Header("UI Elements")]
     public GameObject RestText;
-    public GameObject DefaultCamera;
     public GameObject EndingFeedback;
 
     public GameObject COMPLETE;
@@ -48,6 +47,7 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject path;
     public GameObject Target;
     public GameObject weight;
+    public QuestionnaireManager questionnaireManager;
 
     [Header("Pickup Messages")]
     public GameObject Pickupmessage_LightWeight;
@@ -62,6 +62,7 @@ public class ProjectManager_Block : MonoBehaviour
     private List<GameObject> remainingConditions;
     private int[] conditionCounts;
     private GameObject currentCondition;
+    //public bool RestActiveBool=true;
     private string filePath;
     [Header("Wait Variables")]
     public bool buttonPressed = false;
@@ -73,6 +74,7 @@ public class ProjectManager_Block : MonoBehaviour
     public bool PathEnabled=false;
     void Start()
     {
+        PathEnabled=false;
         EndingFeedback.SetActive(false);
         BaselineConditionNoWeight.SetActive(false);
         NonInterventionCondition.SetActive(false);
@@ -93,7 +95,6 @@ public class ProjectManager_Block : MonoBehaviour
         Target.SetActive(false);
         path.SetActive(false);
         Name.SetActive(true);
-        DefaultCamera.SetActive(true);
         InfoPanel.SetActive(false);
         COMPLETE.SetActive(false);
         GameObject[] Conditions = new GameObject[] {
@@ -120,156 +121,158 @@ public class ProjectManager_Block : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && Startboolean)
         {
+            Debug.Log("Exteriment Triggerered Again by Pressing Space");
             StartExp();
         }
     }
-
-    private void Awake()
-    {
-        filePath = Application.dataPath + "/CSV/response.csv";
-        Directory.CreateDirectory(Application.dataPath + "/CSV");
-        if (!File.Exists(filePath))
-        {
-            using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
-            {
-                sw.WriteLine("Username,currentCondition,Response");
-            }
-        }
-    }
-
     IEnumerator StartExperiment()
+{
+    int count = 0;
+    GameObject weights = GameObject.Find("weights");
+    ResetWeight resetWeight = weight.GetComponent<ResetWeight>();
+    string[] taskOrder = new string[] { "a", "h", "c", "j", "e", "f", "d", "b", "g", "i", "k", "j", "d", "h", "k", "g", "c", "a", "b", "i", "e", "f", "g", "a", "b", "f", "e", "k", "c", "i", "h", "d", "j", "a", "g", "j", "b", "d", "e", "i", "k", "f", "h", "c" };
+
+    foreach (string task in taskOrder)
     {
-        int count = 0;
-        GameObject weight = GameObject.Find("weights");
-        ResetWeight resetWeight = weight.GetComponent<ResetWeight>();
-        string[] taskOrder = new string[] { "a", "h", "c", "j", "e", "f", "d", "b", "g", "i", "k", "j", "d", "h", "k", "g", "c", "a", "b", "i", "e", "f", "g", "a", "b", "f", "e", "k", "c", "i", "h", "d", "j", "a", "g", "j", "b", "d", "e", "i", "k", "f", "h", "c" };
-        foreach (string task in taskOrder)
+        Debug.Log("Next task Loading");
+        Next.SetActive(true);
+        yield return new WaitUntil(() => next);
+        Next.SetActive(false);
+
+        Debug.Log("Pick Up The Weight");
+        Debug.Log("Experiment Number: " + count);
+
+        // Deactivate the current condition
+        if (currentCondition != null)
         {
-            Debug.Log("Next task Loading");
-            Next.SetActive(true);
-            yield return new WaitUntil(() => next);
-            Next.SetActive(false);
-            Debug.Log("Pick Up The Weight");
-            Debug.Log("Experiment Number: " + count);
-            DefaultCamera.SetActive(false);
-            currentCondition = null;
-            Pickupmessage_LightWeight.SetActive(false);
-            Pickupmessage_HeavyWeight.SetActive(false);
-            switch (task)
-            {
-                case "a":
-                    currentCondition = BaselineConditionNoWeight;
-                    Pickupmessage_LightWeight.SetActive(true);
-                    Debug.Log("Current Condition: BaselineConditionNoWeight");
-                    break;
-
-                case "b":
-                    currentCondition = NonInterventionCondition;
-                    Pickupmessage_HeavyWeight.SetActive(true);
-                    Debug.Log("Current Condition: NonInterventionCondition");
-                    break;
-
-                case "c":
-                    currentCondition = InterventionConditionMidpoint;
-                    Pickupmessage_LightWeight.SetActive(true);
-                    Debug.Log("Current Condition: InterventionConditionMidpoint");
-                    break;
-
-                case "d":
-                    currentCondition = InterventionConditionLagWeighted;
-                    Pickupmessage_HeavyWeight.SetActive(true);
-                    Debug.Log("Current Condition: InterventionConditionLagWeighted");
-                    break;
-
-                case "e":
-                    currentCondition = InterventionConditionLagNonWeighted;
-                    Pickupmessage_LightWeight.SetActive(true);
-                    Debug.Log("Current Condition: InterventionConditionLagNonWeighted");
-                    break;
-
-                case "f":
-                    currentCondition = InterventionConditionSpatialOffsetWeighted;
-                    Pickupmessage_HeavyWeight.SetActive(true);
-                    Debug.Log("Current Condition: InterventionConditionSpatialOffsetWeighted");
-                    break;
-
-                case "g":
-                    currentCondition = InterventionConditionSpatialOffsetNonWeighted;
-                    Pickupmessage_LightWeight.SetActive(true);
-                    Debug.Log("Current Condition: InterventionConditionSpatialOffsetNonWeighted");
-                    break;
-
-                case "h":
-                    currentCondition = InterventionConditionDynamicSpatialOffsetWeighted;
-                    Pickupmessage_HeavyWeight.SetActive(true);
-                    Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetWeighted");
-                    break;
-
-                case "i":
-                    currentCondition = InterventionConditionDynamicSpatialOffsetNonWeighted;
-                    Pickupmessage_LightWeight.SetActive(true);
-                    Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetNonWeighted");
-                    break;
-
-                case "j":
-                    currentCondition = InterventionConditionWindNoiseWeighted;
-                    Pickupmessage_HeavyWeight.SetActive(true);
-                    Debug.Log("Current Condition: InterventionConditionWindNoiseWeighted");
-                    break;
-
-                case "k":
-                    currentCondition = InterventionConditionWindNoiseNonWeighted;
-                    Pickupmessage_LightWeight.SetActive(true);
-                    Debug.Log("Current Condition: InterventionConditionWindNoiseNonWeighted");
-                    break;
-            }
-
-            DefaultCamera.SetActive(false);
-            currentCondition.SetActive(true);
-            UltraLeapManager.SetActive(true);
-            weight.SetActive(true);
-            BallPicked = false;
-            resetWeight.reset = true;
-            Debug.Log("Picking Ball for iteration " + count);
-            yield return new WaitUntil(() => BallPicked);
-            Debug.Log("Weight is been picked");
-            path.SetActive(true);
-            Target.SetActive(true);
-            Debug.Log("Experiment Initialized:]");
-            //Active Time of the Condition
-            yield return new WaitForSeconds(20f);
-            TaskComplete.SetActive(true);
-            Target.SetActive(false);
-            path.SetActive(false);
             currentCondition.SetActive(false);
-            UltraLeapManager.SetActive(false);
-            Debug.Log(currentCondition + "  is over");
-            TaskComplete.SetActive(true);
-            yield return new WaitForSeconds(2f);
-            TaskComplete.SetActive(false);
-            feedback.SetActive(true);
-            DefaultCamera.SetActive(true);
-            Debug.Log("fedback done");
-            yield return new WaitUntil(() => buttonPressed);
-            TaskComplete.SetActive(false);
-            RestText.SetActive(true);
-            rest.SetActive(true);
-            Debug.Log("You can Rest");
-            yield return new WaitUntil(() => restActive);
-            Debug.Log("Rest Up");
-            count++;
-            BallPicked = false;
-            restActive = false;
-            rest.SetActive(false);
-            buttonPressed = false;
+            Debug.Log(currentCondition.name + " has been deactivated.");
         }
-        Debug.Log("Experiment Complete.");
-        EndingFeedback.SetActive(true);
-        yield return new WaitUntil(() => FeedbackendGiven);
-        EndingFeedback.SetActive(false);
-        COMPLETE.SetActive(true);
+
+        Pickupmessage_LightWeight.SetActive(false);
+        Pickupmessage_HeavyWeight.SetActive(false);
+
+        switch (task)
+        {
+            case "a":
+                currentCondition = BaselineConditionNoWeight;
+                Pickupmessage_LightWeight.SetActive(true);
+                Debug.Log("Current Condition: BaselineConditionNoWeight");
+                break;
+
+            case "b":
+                currentCondition = NonInterventionCondition;
+                Pickupmessage_HeavyWeight.SetActive(true);
+                Debug.Log("Current Condition: NonInterventionCondition");
+                break;
+
+            case "c":
+                currentCondition = InterventionConditionMidpoint;
+                Pickupmessage_LightWeight.SetActive(true);
+                Debug.Log("Current Condition: InterventionConditionMidpoint");
+                break;
+
+            case "d":
+                currentCondition = InterventionConditionLagWeighted;
+                Pickupmessage_HeavyWeight.SetActive(true);
+                Debug.Log("Current Condition: InterventionConditionLagWeighted");
+                break;
+
+            case "e":
+                currentCondition = InterventionConditionLagNonWeighted;
+                Pickupmessage_LightWeight.SetActive(true);
+                Debug.Log("Current Condition: InterventionConditionLagNonWeighted");
+                break;
+
+            case "f":
+                currentCondition = InterventionConditionSpatialOffsetWeighted;
+                Pickupmessage_HeavyWeight.SetActive(true);
+                Debug.Log("Current Condition: InterventionConditionSpatialOffsetWeighted");
+                break;
+
+            case "g":
+                currentCondition = InterventionConditionSpatialOffsetNonWeighted;
+                Pickupmessage_LightWeight.SetActive(true);
+                Debug.Log("Current Condition: InterventionConditionSpatialOffsetNonWeighted");
+                break;
+
+            case "h":
+                currentCondition = InterventionConditionDynamicSpatialOffsetWeighted;
+                Pickupmessage_HeavyWeight.SetActive(true);
+                Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetWeighted");
+                break;
+
+            case "i":
+                currentCondition = InterventionConditionDynamicSpatialOffsetNonWeighted;
+                Pickupmessage_LightWeight.SetActive(true);
+                Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetNonWeighted");
+                break;
+
+            case "j":
+                currentCondition = InterventionConditionWindNoiseWeighted;
+                Pickupmessage_HeavyWeight.SetActive(true);
+                Debug.Log("Current Condition: InterventionConditionWindNoiseWeighted");
+                break;
+
+            case "k":
+                currentCondition = InterventionConditionWindNoiseNonWeighted;
+                Pickupmessage_LightWeight.SetActive(true);
+                Debug.Log("Current Condition: InterventionConditionWindNoiseNonWeighted");
+                break;
+        }
+
+        currentCondition.SetActive(true);
+        UltraLeapManager.SetActive(true);
+        weight.SetActive(true);
+        BallPicked = false;
+        Debug.Log("Reseting the Weight position");
+        resetWeight.reset = true;
+        Debug.Log("Picking Ball for iteration " + count);
+
+        yield return new WaitUntil(() => BallPicked);
+        Debug.Log("Weight is been picked");
+
+        PathEnabled = true;
+        path.SetActive(true);
+        Target.SetActive(true);
+        Debug.Log("Experiment Initialized:");
+
+        // Active Time of the Condition
+        yield return new WaitForSeconds(5f);
+
+        TaskComplete.SetActive(true);
+        Target.SetActive(false);
+        path.SetActive(false);
+        currentCondition.SetActive(false);
+        UltraLeapManager.SetActive(false);
+        Debug.Log(currentCondition.name + " is over");
+        yield return new WaitForSeconds(2f);
+        TaskComplete.SetActive(false);
+        feedback.SetActive(true);
+        Debug.Log("Feedback done");
+        yield return new WaitUntil(() => buttonPressed);
+        questionnaireManager.ResetFB = true;
+        RestText.SetActive(true);
+        rest.SetActive(true);
+        Debug.Log("You can Rest");
+        yield return new WaitForSeconds(30f);
+        yield return new WaitUntil(() => restActive);
+        Debug.Log("Rest Up");
+        count++;
+        BallPicked = false;
+        restActive = false;
+        rest.SetActive(false);
+        buttonPressed = false;
+        yield return new WaitForSeconds(1f);
     }
 
+    Debug.Log("Experiment Complete.");
+    EndingFeedback.SetActive(true);
+    yield return new WaitUntil(() => FeedbackendGiven);
+    EndingFeedback.SetActive(false);
+    COMPLETE.SetActive(true);
+    PathEnabled = false;
+}
     public void StartExp()
     {
         StartCoroutine(StartExperiment());
@@ -293,16 +296,6 @@ public class ProjectManager_Block : MonoBehaviour
         InfoPanel.SetActive(true);
         Startboolean = true;
     }
-    public void SaveToCSV(string username, string conditionName, float response)
-    {
-        using (StreamWriter sw = new StreamWriter(filePath, true, Encoding.UTF8))
-        {
-            string data = string.Format("{0},{1},{2}", username, conditionName, response);
-            sw.WriteLine(data);
-        }
-        Debug.Log("Data saved - Username: " + username + ", ConditionName: " + conditionName + ", Response: " + response);
-    }
-
     public string GetcurrentCondition()
     {
         return currentCondition.name;
