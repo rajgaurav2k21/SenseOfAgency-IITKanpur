@@ -27,7 +27,6 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject rest;
     public GameObject TaskComplete;
     public GameObject Next;
-
     public GameObject Experience;
 
     [Header("Experiment Settings")]
@@ -265,7 +264,6 @@ public class ProjectManager_Block : MonoBehaviour
         buttonPressed = false;
         yield return new WaitForSeconds(1f);
     }
-
     Debug.Log("Experiment Complete.");
     EndingFeedback.SetActive(true);
     yield return new WaitUntil(() => FeedbackendGiven);

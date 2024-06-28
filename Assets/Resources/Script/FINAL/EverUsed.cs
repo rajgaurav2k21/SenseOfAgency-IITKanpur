@@ -9,7 +9,10 @@ public class EverUsed : MonoBehaviour
     public GameObject Yes;
     public GameObject No;
     public GameObject Text;
+    public GameObject TextYes;
+    public GameObject TextNo;
     public GameObject Dizzy;
+    
     public GameObject Image;
 
     private bool actionPerformed; 
@@ -33,11 +36,17 @@ public class EverUsed : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Y))
             {
+                Debug.Log("Y pressed");
                 PerformAction(true);
+                TextYes.SetActive(true);
+                TextNo.SetActive(false);
             }
             else if (Input.GetKeyDown(KeyCode.N))
             {
+                Debug.Log("N pressed");
                 PerformAction(false);
+                TextNo.SetActive(true);
+                TextYes.SetActive(false);
             }
         }
     }

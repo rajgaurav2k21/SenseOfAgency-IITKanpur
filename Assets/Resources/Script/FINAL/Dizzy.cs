@@ -11,6 +11,8 @@ public class Dizzy : MonoBehaviour
     public GameObject Yes;
     public GameObject No;
     public GameObject Text;
+    public GameObject YesText;
+    public GameObject NoText;
     public GameObject Continue;
     public EverUsed everUsed;
     private bool pressed = false;
@@ -39,15 +41,21 @@ public class Dizzy : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Y))
         {
+            Debug.Log("Y pressed");
             SetToggleState(true);
             ShowYesNoOptions(true);
             pressed = true;
+            YesText.SetActive(true);
+            NoText.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.N))
         {
+            Debug.Log("N pressed");
             SetToggleState(false);
             ShowYesNoOptions(false);
             pressed = true;
+            YesText.SetActive(false);
+            NoText.SetActive(true);
         }
         else if (Input.GetKeyDown(KeyCode.Space) && pressed)
         {
@@ -59,6 +67,7 @@ public class Dizzy : MonoBehaviour
     {
         toggle.isOn = state;
         DizzyState = state ? 1 : 0;
+        Debug.Log("EverUsed Value: " + everUsed);
     }
 
     void ShowYesNoOptions(bool showYes)

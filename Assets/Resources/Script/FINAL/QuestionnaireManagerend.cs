@@ -5,9 +5,9 @@ using System.Text;
 
 public class QuestionnaireManagerend : MonoBehaviour
 {
+    public ProjectManager_Block projectManager_block;
     public TMP_InputField inputField1;
     public TMP_InputField inputField2;
-    public GameObject EndFeedback;
     public TMP_Text questionText1;
     public TMP_Text questionText2;
 
@@ -15,11 +15,10 @@ public class QuestionnaireManagerend : MonoBehaviour
 
     private void Start()
     {
-        filePath = Application.dataPath + "/CSV/response.csv";
+        filePath = Path.Combine(Application.dataPath, "CSV", "UserExperience.csv");
 
         questionText1.text = "Question 1: How did you find the overall experience?";
         questionText2.text = "Question 2: What improvements would you suggest?";
-        EndFeedback.SetActive(true);
         inputField1.ActivateInputField();
     }
 
@@ -33,19 +32,34 @@ public class QuestionnaireManagerend : MonoBehaviour
 
     private void SaveAnswers()
     {
+        if (projectManager_block == null)
+        {
+            Debug.LogError("ProjectManager_Block is not assigned.");
+            return;
+        }
+
         string answer1 = inputField1.text;
         string answer2 = inputField2.text;
 
         StringBuilder csvContent = new StringBuilder();
-        csvContent.AppendLine($"\"{questionText1.text}\",\"{answer1}\"");
-        csvContent.AppendLine($"\"{questionText2.text}\",\"{answer2}\"");
+        csvContent.AppendLine("Username,Question1,Question2");
+        csvContent.AppendLine($"\"{projectManager_block.usernameInput.text}\",\"{answer1}\",\"{answer2}\"");
 
-        File.AppendAllText(filePath, csvContent.ToString());
+        try
+        {
+            File.AppendAllText(filePath, csvContent.ToString());
+            Debug.Log("All answers saved to CSV.");
 
-        Debug.Log("Answers appended to " + filePath);
-        GameObject experimentManager_block = GameObject.Find("ExperimentManager_Block");
-        ProjectManager_Block projectManager_block = experimentManager_block.GetComponent<ProjectManager_Block>();
-        projectManager_block.FeedbackendGiven=true; 
+            projectManager_block.FeedbackendGiven = true;
+            inputField1.text = string.Empty;
+            inputField2.text = string.Empty;
 
+            // Activate the next input field if applicable
+            inputField1.ActivateInputField();
+        }
+        catch (IOException e)
+        {
+            Debug.LogError($"Failed to save answers: {e.Message}");
+        }
     }
 }
