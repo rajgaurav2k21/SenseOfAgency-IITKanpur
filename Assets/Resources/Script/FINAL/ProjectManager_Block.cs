@@ -245,7 +245,7 @@ public class ProjectManager_Block : MonoBehaviour
         currentCondition.SetActive(false);
         UltraLeapManager.SetActive(false);
         Debug.Log(currentCondition.name + " is over");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(60f);
         TaskComplete.SetActive(false);
         feedback.SetActive(true);
         Debug.Log("Feedback done");

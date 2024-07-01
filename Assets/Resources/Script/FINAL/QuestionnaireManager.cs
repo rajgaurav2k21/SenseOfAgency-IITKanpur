@@ -10,17 +10,17 @@ public class QuestionnaireManager : MonoBehaviour
     public ProjectManager_Block projectManager_block;
     public TMP_InputField inputField1;
     public TMP_InputField inputField2;
-    public TMP_InputField inputField3;
-    public TMP_InputField inputField4;
-    public TMP_InputField inputField5;
+    //public TMP_InputField inputField3;
+    //public TMP_InputField inputField4;
+    //public TMP_InputField inputField5;
 
     public TMP_Text questionText1;
     public TMP_Text questionText2;
-    public TMP_Text questionText3;
-    public TMP_Text questionText4;
-    public TMP_Text questionText5;
+    //public TMP_Text questionText3;
+    //public TMP_Text questionText4;
+    //public TMP_Text questionText5;
 
-    public GameObject Panel1;
+    //public GameObject Panel1;
     public GameObject Panel2;
 
     private TMP_InputField[] inputFields;
@@ -29,6 +29,7 @@ public class QuestionnaireManager : MonoBehaviour
 
     private void Start()
     {
+        Panel2.SetActive(true);
         // Set the file path for saving responses
         filePathResponse = Application.persistentDataPath + "/UserResponse.csv";
 
@@ -36,7 +37,7 @@ public class QuestionnaireManager : MonoBehaviour
         Directory.CreateDirectory(Application.persistentDataPath);
 
         // Initialize inputFields array
-        inputFields = new TMP_InputField[] { inputField1, inputField2, inputField3, inputField4, inputField5 };
+        inputFields = new TMP_InputField[] { inputField1, inputField2}; //, inputField3, inputField4, inputField5 
 
         // Set initial UI state
         Panel2.SetActive(false);
@@ -45,9 +46,9 @@ public class QuestionnaireManager : MonoBehaviour
         // Set question texts
         questionText1.text = "Question 1: How responsive was the virtual environment to the actions you initiated?";
         questionText2.text = "Question 2: How much ownership did you feel?";
-        questionText3.text = "Question 3: How confident did you feel when placing objects in the grid?";
+        /*questionText3.text = "Question 3: How confident did you feel when placing objects in the grid?";
         questionText4.text = "Question 4: How much lag do you think your actions had in VR?";
-        questionText5.text = "Question 5: How much leading do you think your actions had compared to your proprioception in VR?";
+        questionText5.text = "Question 5: How much leading do you think your actions had compared to your proprioception in VR?";*/
     }
 
     private void Update()
@@ -106,7 +107,7 @@ public class QuestionnaireManager : MonoBehaviour
             if (currentQuestionIndex == 2)
             {
                 Panel2.SetActive(true);
-                Panel1.SetActive(false);
+                //Panel1.SetActive(false);
             }
         }
     }
@@ -115,11 +116,11 @@ public class QuestionnaireManager : MonoBehaviour
     {
         // Prepare CSV content
         StringBuilder csvContent = new StringBuilder();
-        csvContent.AppendLine("Username,Condition,Question1,Question2,Question3,Question4,Question5");
+        csvContent.AppendLine("Username,Condition,Question1,Question2"); //,Question3,Question4,Question5
 
         // Append user responses
         csvContent.AppendLine($"\"{projectManager_block.usernameInput.text}\",\"{projectManager_block.GetcurrentCondition()}\"," +
-            $"\"{inputFields[0].text}\",\"{inputFields[1].text}\",\"{inputFields[2].text}\",\"{inputFields[3].text}\",\"{inputFields[4].text}\"");
+            $"\"{inputFields[0].text}\",\"{inputFields[1].text}\""); //,\"{inputFields[2].text}\",\"{inputFields[3].text}\",\"{inputFields[4].text}\"
 
         // Write to CSV file
         using (StreamWriter sw = new StreamWriter(filePathResponse, true, Encoding.UTF8))
@@ -144,9 +145,9 @@ public class QuestionnaireManager : MonoBehaviour
             Debug.Log($"Input field {inputField.name} text cleared and deactivated.");
         }
 
-        Panel1.SetActive(true);
-        Panel2.SetActive(false);
-        Debug.Log("Panels switched: Panel1 activated, Panel2 deactivated.");
+        //Panel1.SetActive(true);
+        //Panel2.SetActive(false);
+        //Debug.Log("Panels switched: Panel1 activated, Panel2 deactivated.");
 
         // Activate the first input field
         ActivateCurrentInputField();
