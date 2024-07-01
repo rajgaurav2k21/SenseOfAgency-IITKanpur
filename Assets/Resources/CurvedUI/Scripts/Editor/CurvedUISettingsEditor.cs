@@ -76,7 +76,7 @@ namespace CurvedUI {
                 if (!IsInLayerMask(myTarget.gameObject.layer, CurvedUIInputModule.Instance.RaycastLayerMask) &&
                     myTarget.Interactable)
                 {
-                    Debug.LogError("CURVEDUI: " + WarningLayerNotIncluded, myTarget.gameObject);
+                    //Debug.LogError("CURVEDUI: " + WarningLayerNotIncluded, myTarget.gameObject);
                 }
                 
                 //check if the currently selected control method is enabled in editor.

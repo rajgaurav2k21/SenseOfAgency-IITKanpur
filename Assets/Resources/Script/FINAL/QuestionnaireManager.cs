@@ -132,19 +132,25 @@ public class QuestionnaireManager : MonoBehaviour
 
     public void ResetQuestionnaire()
     {
+        Debug.Log("ResetQuestionnaire method called.");
+
         currentQuestionIndex = 0;
+        Debug.Log("Current question index reset to 0.");
+
         foreach (var inputField in inputFields)
         {
             inputField.text = "";
             inputField.DeactivateInputField();
+            Debug.Log($"Input field {inputField.name} text cleared and deactivated.");
         }
 
-        // Switch panels back to the initial state
         Panel1.SetActive(true);
         Panel2.SetActive(false);
+        Debug.Log("Panels switched: Panel1 activated, Panel2 deactivated.");
 
         // Activate the first input field
         ActivateCurrentInputField();
+        Debug.Log("First input field activated.");
 
         Debug.Log("Questionnaire has been reset.");
     }

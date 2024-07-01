@@ -254,9 +254,9 @@ public class ProjectManager_Block : MonoBehaviour
         RestText.SetActive(true);
         rest.SetActive(true);
         Debug.Log("You can Rest");
-        yield return new WaitForSeconds(30f);
         yield return new WaitUntil(() => restActive);
         Debug.Log("Rest Up");
+        questionnaireManager.ResetQuestionnaire();
         count++;
         BallPicked = false;
         restActive = false;
