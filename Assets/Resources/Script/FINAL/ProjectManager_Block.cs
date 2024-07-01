@@ -245,7 +245,7 @@ public class ProjectManager_Block : MonoBehaviour
         currentCondition.SetActive(false);
         UltraLeapManager.SetActive(false);
         Debug.Log(currentCondition.name + " is over");
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(60f);
         TaskComplete.SetActive(false);
         feedback.SetActive(true);
         Debug.Log("Feedback done");
@@ -254,9 +254,9 @@ public class ProjectManager_Block : MonoBehaviour
         RestText.SetActive(true);
         rest.SetActive(true);
         Debug.Log("You can Rest");
-        yield return new WaitForSeconds(30f);
         yield return new WaitUntil(() => restActive);
         Debug.Log("Rest Up");
+        questionnaireManager.ResetQuestionnaire();
         count++;
         BallPicked = false;
         restActive = false;
