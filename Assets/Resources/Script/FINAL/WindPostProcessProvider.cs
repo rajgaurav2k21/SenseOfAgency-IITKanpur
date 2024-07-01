@@ -21,7 +21,7 @@ public class WindPostProcessProvider : PostProcessProvider
     [SerializeField]
     private float windNoiseFrequency = 2f;
 
-    private float timeCounter = 0f;
+    //private float timeCounter = 0f;
 
     public override void ProcessFrame(ref Frame inputFrame)
     {

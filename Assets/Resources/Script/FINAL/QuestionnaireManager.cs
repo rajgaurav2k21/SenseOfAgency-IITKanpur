@@ -40,7 +40,7 @@ public class QuestionnaireManager : MonoBehaviour
         inputFields = new TMP_InputField[] { inputField1, inputField2}; //, inputField3, inputField4, inputField5 
 
         // Set initial UI state
-        Panel2.SetActive(false);
+        Panel2.SetActive(true);
         ActivateCurrentInputField();
 
         // Set question texts
