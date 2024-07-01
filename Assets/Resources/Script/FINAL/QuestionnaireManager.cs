@@ -6,6 +6,7 @@ using System.Text;
 public class QuestionnaireManager : MonoBehaviour
 {
     public GameObject feedback;
+    public bool ResetFB =true;
     public ProjectManager_Block projectManager_block;
     public TMP_InputField inputField1;
     public TMP_InputField inputField2;
