@@ -112,7 +112,7 @@ namespace CurvedUI
                             hierarchyName = trans.parent.name + "/" + hierarchyName;
                             trans = trans.parent;
                         }
-                        Debug.LogWarning("CURVEDUI: Interactions on nested canvases are not supported. You won't be able to interact with any child object of [" + hierarchyName + "]", cnv.gameObject);
+                        //Debug.LogWarning("CURVEDUI: Interactions on nested canvases are not supported. You won't be able to interact with any child object of [" + hierarchyName + "]", cnv.gameObject);
                     }
                 }
             }

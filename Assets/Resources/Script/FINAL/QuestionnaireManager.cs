@@ -6,7 +6,6 @@ using System.Text;
 public class QuestionnaireManager : MonoBehaviour
 {
     public GameObject feedback;
-    public bool ResetFB = false;
     public ProjectManager_Block projectManager_block;
     public TMP_InputField inputField1;
     public TMP_InputField inputField2;
@@ -66,13 +65,12 @@ public class QuestionnaireManager : MonoBehaviour
                 else
                 {
                     SaveAllAnswers();
-                    ResetQuestionnaire();
                 }
             }
         }
         //projectManager_block.RestActiveBool=false;
         // Check for Space key press to hide feedback panel
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             feedback.SetActive(false);
             projectManager_block.buttonPressed = true;
@@ -131,11 +129,8 @@ public class QuestionnaireManager : MonoBehaviour
         Debug.Log("All answers saved to CSV.");
     }
 
-    private void ResetQuestionnaire()
+    public void ResetQuestionnaire()
     {
-        if(ResetFB)
-        {
-        // Reset currentQuestionIndex and clear input fields
         currentQuestionIndex = 0;
         foreach (var inputField in inputFields)
         {
@@ -151,6 +146,5 @@ public class QuestionnaireManager : MonoBehaviour
         ActivateCurrentInputField();
 
         Debug.Log("Questionnaire has been reset.");
-        }
     }
 }

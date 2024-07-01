@@ -14,8 +14,10 @@ public class Next : MonoBehaviour
 
     public void NextLoading()
     {
+        
         if (progressBar.currentPercent == 100f)
         {
+            Debug.Log("Loading");
             projectManager_block.next = true;
             projectManager_block.Next.SetActive(false);
         }

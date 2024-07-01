@@ -4,12 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - projectile
+  - TV
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - tv
   - Water
   - UI
   - Hide

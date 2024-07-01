@@ -3,14 +3,13 @@ using UnityEngine;
 public class Rest : MonoBehaviour
 {
     public ProjectManager_Block projectManager_block;
-    private void OnTriggerExit(Collider other)
+    void Update()
     {
-        if (other.CompareTag("Player"))
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            Debug.Log("Rest Up");
             projectManager_block.restActive = true;
-            
             projectManager_block.RestText.SetActive(false);
+            Debug.Log("Rest Up");
         }
     }
 }
