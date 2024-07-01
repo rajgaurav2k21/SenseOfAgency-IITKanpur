@@ -66,6 +66,7 @@ public class EverUsed : MonoBehaviour
         {
             No.SetActive(true);
             Yes.SetActive(false);
+            Dizzy.SetActive(true);
         }
 
         Check.SetActive(true);
