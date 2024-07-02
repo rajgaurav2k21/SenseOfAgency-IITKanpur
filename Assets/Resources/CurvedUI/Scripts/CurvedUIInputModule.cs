@@ -860,7 +860,7 @@ public class CurvedUIInputModule : StandaloneInputModule {
 #elif CURVEDUI_UNITY_XR
           return UsedHand == Hand.Left ? leftXRController.transform : rightXRController.transform; 
 #else
-          Debug.LogWarning("CURVEDUI: CurvedUIInputModule.ActiveController will only return proper gameobject in  STEAMVR, STEAMVR_LEGACY, OCULUSVR, UNITY_XR or GOOGLEVR control methods.");
+          //Debug.LogWarning("CURVEDUI: CurvedUIInputModule.ActiveController will only return proper gameobject in  STEAMVR, STEAMVR_LEGACY, OCULUSVR, UNITY_XR or GOOGLEVR control methods.");
           return null;
 #endif
         }
@@ -877,7 +877,7 @@ public class CurvedUIInputModule : StandaloneInputModule {
 #if  CURVEDUI_STEAMVR_LEGACY || CURVEDUI_STEAMVR_2 || CURVEDUI_GOOGLEVR || CURVEDUI_OCULUSVR || CURVEDUI_UNITY_XR
             return ControllerTransform.forward;
 #else
-            Debug.LogWarning("CURVEDUI: CurvedUIInputModule.PointingDirection will only return proper direction in  STEAMVR, STEAMVR_LEGACY, OCULUSVR, UNITY_XR or GOOGLEVR control methods.");
+            //Debug.LogWarning("CURVEDUI: CurvedUIInputModule.PointingDirection will only return proper direction in  STEAMVR, STEAMVR_LEGACY, OCULUSVR, UNITY_XR or GOOGLEVR control methods.");
             return Vector3.forward;
 #endif
         }
@@ -895,7 +895,7 @@ public class CurvedUIInputModule : StandaloneInputModule {
 #if  CURVEDUI_STEAMVR_LEGACY || CURVEDUI_STEAMVR_2 || CURVEDUI_GOOGLEVR || CURVEDUI_OCULUSVR || CURVEDUI_UNITY_XR
             return ControllerTransform.position;
 #else
-            Debug.LogWarning("CURVEDUI: CurvedUIInputModule.PointingOrigin will only return proper position in  STEAMVR, STEAMVR_LEGACY, OCULUSVR, UNITY_XR or GOOGLEVR control methods.");
+            //Debug.LogWarning("CURVEDUI: CurvedUIInputModule.PointingOrigin will only return proper position in  STEAMVR, STEAMVR_LEGACY, OCULUSVR, UNITY_XR or GOOGLEVR control methods.");
             return Vector3.zero;
 #endif
         }

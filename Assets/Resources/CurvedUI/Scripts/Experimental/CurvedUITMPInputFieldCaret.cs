@@ -166,9 +166,6 @@ namespace CurvedUI
             {
                 TMP_TextInfo txtInfo = myField.textComponent.textInfo;
 
-                if (charNo > txtInfo.characterCount - 1) //do not go over the text length.
-                    charNo = txtInfo.characterCount - 1;
-
                 TMP_CharacterInfo charInfo = txtInfo.characterInfo[charNo];
 
                 return new Vector2(charInfo.topLeft.x, charInfo.ascender);
