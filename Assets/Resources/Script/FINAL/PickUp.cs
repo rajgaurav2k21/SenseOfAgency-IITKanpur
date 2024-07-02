@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour
 {
+    public HandColliderLag handColliderlag;
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -15,7 +16,7 @@ public class PickUp : MonoBehaviour
         projectManager_block.BallPicked = true;
         projectManager_block.Pickupmessage_LightWeight.SetActive(false);
         projectManager_block.Pickupmessage_HeavyWeight.SetActive(false);
-        
+        handColliderlag.Weightlag=true;
         }
     }
 }
