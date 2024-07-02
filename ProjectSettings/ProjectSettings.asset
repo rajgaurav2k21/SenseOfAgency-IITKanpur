@@ -807,9 +807,20 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS
-    Standalone: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;UNITY_CCU;CURVEDUI_TMP
+    Android: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;ENVIRO_3
+    EmbeddedLinux: ENVIRO_3
+    GameCoreXboxOne: ENVIRO_3
+    Nintendo Switch: ENVIRO_3
+    PS4: ENVIRO_3
+    PS5: ENVIRO_3
+    QNX: ENVIRO_3
+    Stadia: ENVIRO_3
+    Standalone: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS;UNITY_CCU;CURVEDUI_TMP;ENVIRO_3
+    VisionOS: ENVIRO_3
+    WebGL: ENVIRO_3
     Windows Store Apps: USE_INPUT_SYSTEM_POSE_CONTROL;USE_STICK_CONTROL_THUMBSTICKS
+    XboxOne: ENVIRO_3
+    tvOS: ENVIRO_3
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
