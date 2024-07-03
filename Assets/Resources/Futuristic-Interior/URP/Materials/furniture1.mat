@@ -62,12 +62,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - Vector1_630e1c076bf2446b95b0166b7c8b0909: 1
     - _Glossiness: 0
     - _Metallic: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smothness_Strength: 1.58
-    - _Smothness_Strength_1: 5.09
+    - _Smothness_Strength_1: 7.32
     - _UseAoMap: 0
     - _UseColorMap: 1
     - _UseEmissiveMap: 1
@@ -77,8 +78,8 @@ Material:
     m_Colors:
     - _Color: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 1.2154857, g: 0.8480108, b: 0, a: 0}
-    - _UvOffset: {r: 0, g: 0, b: 0, a: 0}
-    - _UvTiling: {r: 1, g: 1, b: 0, a: 0}
+    - _UvOffset: {r: 1, g: 1, b: 0, a: 0}
+    - _UvTiling: {r: 2, g: 2, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &2883744843002087224
 MonoBehaviour:

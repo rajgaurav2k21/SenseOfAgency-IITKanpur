@@ -20,7 +20,6 @@ public class ProjectManager_Block : MonoBehaviour
     [Header("UI Elements")]
     public GameObject RestText;
     public GameObject EndingFeedback;
-
     public GameObject COMPLETE;
     public GameObject InfoPanel;
     public GameObject Name;
@@ -31,10 +30,9 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject rest;
     public GameObject TaskComplete;
     public GameObject Next;
-
     public GameObject Experience;
 
-    [Header("Experiment Settings")]
+    [Header("Conditions")]
     public GameObject BaselineConditionNoWeight;
     public GameObject NonInterventionCondition;
     public GameObject InterventionConditionMidpoint;
@@ -47,11 +45,21 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject InterventionConditionWindNoiseWeighted;
     public GameObject InterventionConditionWindNoiseNonWeighted;
 
-
+    [Header("Path & Weights")]
     public GameObject path;
     public GameObject Target;
+
+    [Header("Weights")]
     public GameObject weight;
+    public GameObject lightWeight;
+    public GameObject heavyWeight;
+    public Light lightComp;
+    public Light heavyComp;
+
+    [Header("Script Refs")]
     public QuestionnaireManager questionnaireManager;
+    public PickUp pickup1;
+    public PickUp pickup2;
 
     [Header("Pickup Messages")]
     public GameObject Pickupmessage_LightWeight;
@@ -76,6 +84,8 @@ public class ProjectManager_Block : MonoBehaviour
     public bool PathEnabled = false;
     void Start()
     {
+        lightComp = lightWeight.GetComponent<Light>();
+        heavyComp = heavyWeight.GetComponent<Light>();
         feedback.SetActive(false);
         ExpCamera.SetActive(false);
         UICamera.SetActive(true);
@@ -158,66 +168,77 @@ public class ProjectManager_Block : MonoBehaviour
                     currentCondition = BaselineConditionNoWeight;
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: BaselineConditionNoWeight");
+                    lightComp.enabled = true;
                     break;
 
                 case "b":
                     currentCondition = NonInterventionCondition;
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: NonInterventionCondition");
+                    heavyComp.enabled = true;
                     break;
 
                 case "c":
                     currentCondition = InterventionConditionMidpoint;
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionMidpoint");
+                    lightComp.enabled = true;
                     break;
 
                 case "d":
                     currentCondition = InterventionConditionLagWeighted;
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionLagWeighted");
+                    heavyComp.enabled = true;
                     break;
 
                 case "e":
                     currentCondition = InterventionConditionLagNonWeighted;
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionLagNonWeighted");
+                    lightComp.enabled = true;
                     break;
 
                 case "f":
                     currentCondition = InterventionConditionSpatialOffsetWeighted;
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionSpatialOffsetWeighted");
+                    heavyComp.enabled = true;
                     break;
 
                 case "g":
                     currentCondition = InterventionConditionSpatialOffsetNonWeighted;
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionSpatialOffsetNonWeighted");
+                    lightComp.enabled = true;
                     break;
 
                 case "h":
                     currentCondition = InterventionConditionDynamicSpatialOffsetWeighted;
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetWeighted");
+                    heavyComp.enabled = true;
                     break;
 
                 case "i":
                     currentCondition = InterventionConditionDynamicSpatialOffsetNonWeighted;
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetNonWeighted");
+                    lightComp.enabled = true;
                     break;
 
                 case "j":
                     currentCondition = InterventionConditionWindNoiseWeighted;
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionWindNoiseWeighted");
+                    heavyComp.enabled = true;
                     break;
 
                 case "k":
                     currentCondition = InterventionConditionWindNoiseNonWeighted;
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionWindNoiseNonWeighted");
+                    lightComp.enabled = true;
                     break;
             }
 
@@ -245,6 +266,9 @@ public class ProjectManager_Block : MonoBehaviour
             path.SetActive(false);
             currentCondition.SetActive(false);
             UltraLeapManager.SetActive(false);
+            Debug.Log("Detached");
+            pickup1.Detach();
+            pickup2.Detach();
             Debug.Log(currentCondition.name + " is over");
             yield return new WaitForSeconds(5f);
             TaskComplete.SetActive(false);
