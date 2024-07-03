@@ -25,7 +25,7 @@ public class QuestionnaireManager : MonoBehaviour
         Panel2.SetActive(true);
 
         // Set the file path for saving responses
-        filePathResponse = Application.persistentDataPath + "/UserResponse.csv";
+        filePathResponse = Application.persistentDataPath + "/CSV/UserResponse.csv";
 
         // Create directory if it doesn't exist
         Directory.CreateDirectory(Application.persistentDataPath);

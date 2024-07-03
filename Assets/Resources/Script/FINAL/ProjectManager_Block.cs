@@ -58,8 +58,8 @@ public class ProjectManager_Block : MonoBehaviour
 
     [Header("Script Refs")]
     public QuestionnaireManager questionnaireManager;
-    public PickUp pickup1;
-    public PickUp pickup2;
+    public PickUpLight pickupLight;
+    public PickUpHeavy pickupHeavy;
 
     [Header("Pickup Messages")]
     public GameObject Pickupmessage_LightWeight;
@@ -132,6 +132,8 @@ public class ProjectManager_Block : MonoBehaviour
         BallPicked = false;
         Next.SetActive(false);
         Experience.SetActive(false);
+        lightComp.enabled = false;
+        heavyComp.enabled = false;
     }
     IEnumerator StartExperiment()
     {
@@ -169,6 +171,7 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: BaselineConditionNoWeight");
                     lightComp.enabled = true;
+                    pickupLight.currentTransform=0;
                     break;
 
                 case "b":
@@ -176,13 +179,15 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: NonInterventionCondition");
                     heavyComp.enabled = true;
+                    pickupHeavy.currentTransform=0;
                     break;
 
                 case "c":
                     currentCondition = InterventionConditionMidpoint;
-                    Pickupmessage_LightWeight.SetActive(true);
+                    Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionMidpoint");
-                    lightComp.enabled = true;
+                    heavyComp.enabled = true;
+                    pickupHeavy.currentTransform=1;
                     break;
 
                 case "d":
@@ -190,6 +195,7 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionLagWeighted");
                     heavyComp.enabled = true;
+                    pickupHeavy.currentTransform=2;
                     break;
 
                 case "e":
@@ -197,6 +203,7 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionLagNonWeighted");
                     lightComp.enabled = true;
+                    pickupLight.currentTransform=1;
                     break;
 
                 case "f":
@@ -204,6 +211,7 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionSpatialOffsetWeighted");
                     heavyComp.enabled = true;
+                    pickupHeavy.currentTransform=3;
                     break;
 
                 case "g":
@@ -211,6 +219,7 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionSpatialOffsetNonWeighted");
                     lightComp.enabled = true;
+                    pickupLight.currentTransform=2;
                     break;
 
                 case "h":
@@ -218,6 +227,7 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetWeighted");
                     heavyComp.enabled = true;
+                    pickupHeavy.currentTransform=4;
                     break;
 
                 case "i":
@@ -225,6 +235,7 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetNonWeighted");
                     lightComp.enabled = true;
+                    pickupLight.currentTransform=3;
                     break;
 
                 case "j":
@@ -232,6 +243,7 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionWindNoiseWeighted");
                     heavyComp.enabled = true;
+                    pickupHeavy.currentTransform=5;
                     break;
 
                 case "k":
@@ -239,6 +251,7 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionWindNoiseNonWeighted");
                     lightComp.enabled = true;
+                    pickupLight.currentTransform=4;
                     break;
             }
 
@@ -259,7 +272,7 @@ public class ProjectManager_Block : MonoBehaviour
             Debug.Log("Experiment Initialized:");
 
             // Active Time of the Condition
-            yield return new WaitForSeconds(70f);
+            yield return new WaitForSeconds(2f);
 
             TaskComplete.SetActive(true);
             Target.SetActive(false);
@@ -267,8 +280,8 @@ public class ProjectManager_Block : MonoBehaviour
             currentCondition.SetActive(false);
             UltraLeapManager.SetActive(false);
             Debug.Log("Detached");
-            pickup1.Detach();
-            pickup2.Detach();
+            pickupLight.Detach();
+            pickupHeavy.Detach();
             Debug.Log(currentCondition.name + " is over");
             yield return new WaitForSeconds(5f);
             TaskComplete.SetActive(false);
