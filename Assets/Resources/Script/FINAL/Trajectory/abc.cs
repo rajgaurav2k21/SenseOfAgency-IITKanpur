@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
-public class TrajectoryInterventionDynamicSpatialOffsetNW : MonoBehaviour
+public class abc : MonoBehaviour
 {
     public Transform Userball;
     private HashSet<Vector3> savedPoints;
@@ -16,7 +16,7 @@ public class TrajectoryInterventionDynamicSpatialOffsetNW : MonoBehaviour
         ProjectManager_Block projectManager_block = experimentManager_block.GetComponent<ProjectManager_Block>();
         username = projectManager_block.usernameInput.text;
         savedPoints = new HashSet<Vector3>();
-        filePath = Application.dataPath + "/CSV/Trajectory/InterventionDynamicSpatialOffsetNW.csv";
+        filePath = Application.dataPath + "/CSV/Trajectory/Baseline.csv";
         Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
         if (!File.Exists(filePath))
