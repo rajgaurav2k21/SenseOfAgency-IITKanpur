@@ -5,9 +5,9 @@ using UnityEngine;
 public class Feedback : MonoBehaviour
 {
     public GameObject WrongBelief;
-    public GameObject Range;
     public Transform TargetTransform;
     public Transform ColliderTransform;
+    public ProjectManager_Block projectManager_Block;
     void Start()
     {
         WrongBelief.SetActive(false);
@@ -19,18 +19,18 @@ public class Feedback : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag== "Player")
+        if(other.tag== "Weight")
         {
             Debug.Log("Wrong belief triggered by "+ other.name);
             WrongBelief.SetActive(true);
-            StartCoroutine(DestroyAfterDelay(WrongBelief, 7.0f));
-            Debug.Log("Misconception over");
+            StartCoroutine(Delay(7.0f));
         }
     }
-     private IEnumerator DestroyAfterDelay(GameObject obj, float delay)
+     private IEnumerator Delay(float delay)
     {
+        Debug.Log("DelayCoroutine called");
         yield return new WaitForSeconds(delay);
-        Destroy(obj);
-        Range.SetActive(false);
+        WrongBelief.SetActive(false);
+        projectManager_Block.HideMisconceptions();
     }
 }

@@ -15,25 +15,28 @@ public class QuestionnaireManager : MonoBehaviour
     public TMP_Text questionText2;
 
     public GameObject Panel2;
+    public GameObject TextSpace;
 
     private int currentQuestionIndex = 0;
-    private string filePathResponse;
+    private string filePath;
 
     private void Start()
     {
         ResetQuestionnaire();
         Panel2.SetActive(true);
+        TextSpace.SetActive(false);
 
         // Set the file path for saving responses
-        filePathResponse = Application.persistentDataPath + "/CSV/UserResponse.csv";
-
-        // Create directory if it doesn't exist
-        Directory.CreateDirectory(Application.persistentDataPath);
-
-        // Set initial UI state
+        filePath = Application.dataPath + "/CSV/UserData.csv";
+        Directory.CreateDirectory(Application.dataPath + "/CSV");
         ActivateCurrentInputField();
-
-        // Set question texts
+        if (!File.Exists(filePath))
+        {
+            using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
+            {
+                sw.WriteLine("Username,Condition,Question1,Question2");
+            }
+        }
         questionText1.text = "Question 1: How responsive was the virtual environment to the actions you initiated?";
         questionText2.text = "Question 2: How much ownership did you feel?";
     }
@@ -57,6 +60,7 @@ public class QuestionnaireManager : MonoBehaviour
                     currentQuestionIndex = 0;
                     
                     Debug.Log("All answers saved to CSV.");
+                    TextSpace.SetActive(true);
                 }
             }
         }
@@ -102,19 +106,17 @@ public class QuestionnaireManager : MonoBehaviour
             Debug.Log($"Saved answer for question {currentQuestionIndex + 1}: {answer}");
         }
     }
-
     private void SaveAllAnswers()
     {
         // Prepare CSV content
         StringBuilder csvContent = new StringBuilder();
-        csvContent.AppendLine("Username,Condition,Question1,Question2");
 
         // Append user responses
         csvContent.AppendLine($"\"{projectManager_block.usernameInput.text}\",\"{projectManager_block.GetcurrentCondition()}\"," +
             $"\"{inputField1.text}\",\"{inputField2.text}\"");
 
         // Write to CSV file
-        using (StreamWriter sw = new StreamWriter(filePathResponse, true, Encoding.UTF8))
+        using (StreamWriter sw = new StreamWriter(filePath, true, Encoding.UTF8))
         {
             sw.WriteLine(csvContent.ToString().TrimEnd());
         }

@@ -14,7 +14,7 @@ public class PickUpHeavy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log("HandColliderLag");
+            Debug.Log("Weight is Attached to you:}");
             palmTransform = other.transform;
             this.transform.SetParent(palmTransform);
             UpdateCubePositionAndRotation();

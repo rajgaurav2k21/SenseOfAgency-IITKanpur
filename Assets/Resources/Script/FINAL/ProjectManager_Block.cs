@@ -31,6 +31,7 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject TaskComplete;
     public GameObject Next;
     public GameObject Experience;
+    public GameObject Misconception;
 
     [Header("Conditions")]
     public GameObject BaselineConditionNoWeight;
@@ -82,8 +83,37 @@ public class ProjectManager_Block : MonoBehaviour
     public bool ExperiencePicked = false;
     public bool FeedbackendGiven = false;
     public bool PathEnabled = false;
+
+    [Header("Duration Of Experiment")]
+    public float ExperimentDuration = 70f;
+
+    [Header("Trajectory Tracker")]
+    public GameObject TrajectoryTracker;
+    public TrajectoryBaseline trajectoryBaselineScript;
+    public TrajectoryInterventionDynamicSpatialOffsetNW trajectoryInterventionDynamicSpatialOffsetNWScript;
+    public TrajectoryInterventionDynamicSpatialOffsetW trajectoryInterventionDynamicSpatialOffsetWScript;
+    public TrajectoryInterventionLagNW trajectoryInterventionLagNWScript;
+    public TrajectoryInterventionLagW trajectoryInterventionLagWScript;
+    public TrajectoryInterventionMidpoint trajectoryInterventionMidpointScript;
+    public TrajectoryInterventionSpatialOffsetNW trajectoryInterventionSpatialOffsetNWScript;
+    public TrajectoryInterventionSpatialOffsetW trajectoryInterventionSpatialOffsetWScript;
+    public TrajectoryInterventionWindNoiceNW trajectoryInterventionWindNoiceNWScript;
+    public TrajectoryInterventionWindNoiceW trajectoryInterventionWindNoiceWScript;
+    public TrajectoryNonIntervention trajectoryNonInterventionScript;
     void Start()
     {
+        TrajectoryTracker.SetActive(false);
+        trajectoryBaselineScript.enabled = false;
+        trajectoryNonInterventionScript.enabled = false;
+        trajectoryInterventionMidpointScript.enabled = false;
+        trajectoryInterventionLagWScript.enabled = false;
+        trajectoryInterventionLagNWScript.enabled = false;
+        trajectoryInterventionSpatialOffsetWScript.enabled = false;
+        trajectoryInterventionSpatialOffsetNWScript.enabled = false;
+        trajectoryInterventionDynamicSpatialOffsetWScript.enabled = false;
+        trajectoryInterventionDynamicSpatialOffsetNWScript.enabled = false;
+        trajectoryInterventionWindNoiceWScript.enabled = false;
+        trajectoryInterventionWindNoiceNWScript.enabled = false;
         lightComp = lightWeight.GetComponent<Light>();
         heavyComp = heavyWeight.GetComponent<Light>();
         feedback.SetActive(false);
@@ -147,7 +177,7 @@ public class ProjectManager_Block : MonoBehaviour
         UICamera.SetActive(false);
         ExpCamera.SetActive(true);
         Next.SetActive(false);
-        string[] taskOrder = new string[] { "a", "h", "c", "j", "e", "f", "d", "b", "g", "i", "k", "j", "d", "h", "k", "g", "c", "a", "b", "i", "e", "f", "g", "a", "b", "f", "e", "k", "c", "i", "h", "d", "j", "a", "g", "j", "b", "d", "e", "i", "k", "f", "h", "c" };
+        string[] taskOrder = new string[] { "a", "h" };
 
         foreach (string task in taskOrder)
         {
@@ -171,7 +201,8 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: BaselineConditionNoWeight");
                     lightComp.enabled = true;
-                    pickupLight.currentTransform=0;
+                    pickupLight.currentTransform = 0;
+                    trajectoryBaselineScript.enabled = true;
                     break;
 
                 case "b":
@@ -179,7 +210,8 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: NonInterventionCondition");
                     heavyComp.enabled = true;
-                    pickupHeavy.currentTransform=0;
+                    pickupHeavy.currentTransform = 0;
+                    trajectoryNonInterventionScript.enabled = true;
                     break;
 
                 case "c":
@@ -187,7 +219,8 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionMidpoint");
                     heavyComp.enabled = true;
-                    pickupHeavy.currentTransform=1;
+                    pickupHeavy.currentTransform = 1;
+                    trajectoryInterventionMidpointScript.enabled = true;
                     break;
 
                 case "d":
@@ -195,7 +228,8 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionLagWeighted");
                     heavyComp.enabled = true;
-                    pickupHeavy.currentTransform=2;
+                    pickupHeavy.currentTransform = 2;
+                    trajectoryInterventionLagWScript.enabled = true;
                     break;
 
                 case "e":
@@ -203,7 +237,8 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionLagNonWeighted");
                     lightComp.enabled = true;
-                    pickupLight.currentTransform=1;
+                    pickupLight.currentTransform = 1;
+                    trajectoryInterventionLagNWScript.enabled = true;
                     break;
 
                 case "f":
@@ -211,7 +246,8 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionSpatialOffsetWeighted");
                     heavyComp.enabled = true;
-                    pickupHeavy.currentTransform=3;
+                    pickupHeavy.currentTransform = 3;
+                    trajectoryInterventionSpatialOffsetWScript.enabled = true;
                     break;
 
                 case "g":
@@ -219,7 +255,8 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionSpatialOffsetNonWeighted");
                     lightComp.enabled = true;
-                    pickupLight.currentTransform=2;
+                    pickupLight.currentTransform = 2;
+                    trajectoryInterventionSpatialOffsetNWScript.enabled = true;
                     break;
 
                 case "h":
@@ -227,7 +264,8 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetWeighted");
                     heavyComp.enabled = true;
-                    pickupHeavy.currentTransform=4;
+                    pickupHeavy.currentTransform = 4;
+                    trajectoryInterventionDynamicSpatialOffsetWScript.enabled = true;
                     break;
 
                 case "i":
@@ -235,7 +273,8 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetNonWeighted");
                     lightComp.enabled = true;
-                    pickupLight.currentTransform=3;
+                    pickupLight.currentTransform = 3;
+                    trajectoryInterventionDynamicSpatialOffsetNWScript.enabled = true;
                     break;
 
                 case "j":
@@ -243,7 +282,8 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionWindNoiseWeighted");
                     heavyComp.enabled = true;
-                    pickupHeavy.currentTransform=5;
+                    pickupHeavy.currentTransform = 5;
+                    trajectoryInterventionWindNoiceWScript.enabled = true;
                     break;
 
                 case "k":
@@ -251,7 +291,8 @@ public class ProjectManager_Block : MonoBehaviour
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionWindNoiseNonWeighted");
                     lightComp.enabled = true;
-                    pickupLight.currentTransform=4;
+                    pickupLight.currentTransform = 4;
+                    trajectoryInterventionWindNoiceNWScript.enabled = true;
                     break;
             }
 
@@ -272,7 +313,7 @@ public class ProjectManager_Block : MonoBehaviour
             Debug.Log("Experiment Initialized:");
 
             // Active Time of the Condition
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(ExperimentDuration);
 
             TaskComplete.SetActive(true);
             Target.SetActive(false);
@@ -306,6 +347,17 @@ public class ProjectManager_Block : MonoBehaviour
             buttonPressed = false;
             UICamera.SetActive(false);
             ExpCamera.SetActive(true);
+            trajectoryBaselineScript.enabled = false;
+            trajectoryNonInterventionScript.enabled = false;
+            trajectoryInterventionMidpointScript.enabled = false;
+            trajectoryInterventionLagWScript.enabled = false;
+            trajectoryInterventionLagNWScript.enabled = false;
+            trajectoryInterventionSpatialOffsetWScript.enabled = false;
+            trajectoryInterventionSpatialOffsetNWScript.enabled = false;
+            trajectoryInterventionDynamicSpatialOffsetWScript.enabled = false;
+            trajectoryInterventionDynamicSpatialOffsetNWScript.enabled = false;
+            trajectoryInterventionWindNoiceWScript.enabled = false;
+            trajectoryInterventionWindNoiceNWScript.enabled = false;
         }
 
         Debug.Log("Experiment Complete.");
@@ -341,5 +393,9 @@ public class ProjectManager_Block : MonoBehaviour
     public string GetcurrentCondition()
     {
         return currentCondition.name;
+    }
+    public void HideMisconceptions()
+    {
+        Misconception.SetActive(false);
     }
 }

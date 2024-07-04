@@ -1,16 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TrajectoryOn : MonoBehaviour
 {
-    public GameObject TrajectoryManager;
-    public void OnTriggerEnter(Collider other)
+    [SerializeField]
+    private GameObject trajectoryManager;
+
+    private void Start()
     {
-        TrajectoryManager.SetActive(true);
+        trajectoryManager.SetActive(false);
     }
-    public void OnTriggerExit(Collider other)
+
+    private void OnTriggerEnter(Collider other)
     {
-        TrajectoryManager.SetActive(false);
+        if (other.CompareTag("Weight"))
+        {
+            Debug.Log("Entering Trajectory");
+            trajectoryManager.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Weight"))
+        {
+            Debug.Log("Exiting Trajectory");
+            trajectoryManager.SetActive(false);
+        }
     }
 }

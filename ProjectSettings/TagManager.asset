@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - TV
+  - Weight
   layers:
   - Default
   - TransparentFX

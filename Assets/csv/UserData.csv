@@ -1,0 +1,12 @@
+﻿Username,Condition,Question1,Question2
+"rrt","BaselineCondition(Non Weight)","5","6"
+"rrt","InterventionCondition(Dynamic Spatial Offset) w","6","7"
+"4","BaselineCondition(Non Weight)","4","5"
+"4","InterventionCondition(Dynamic Spatial Offset) w","6","6"
+"r55r","InterventionCondition(Dynamic Spatial Offset) w","4","5"
+"5","BaselineCondition(Non Weight)","5","5"
+"raj","BaselineCondition(Non Weight)","","3"
+"raj","InterventionCondition(Dynamic Spatial Offset) w","","77"
+"kljkljkl","BaselineCondition(Non Weight)","3","4"
+"444","BaselineCondition(Non Weight)","4","5"
+"444","InterventionCondition(Dynamic Spatial Offset) w","","ffffh"

@@ -13,8 +13,7 @@ public class AttachToPalm : MonoBehaviour
         Debug.Log("HandColliderLag");
 
         // Ensure the cube is not already attached and the position marker is set
-        if (!isAttached && positionMarker != null && other.CompareTag("UltraleapPalm"))
-        {
+        
             // Get the transform of the collider (should be the palm)
             palmTransform = other.transform;
 
@@ -26,7 +25,7 @@ public class AttachToPalm : MonoBehaviour
 
             // Mark the cube as attached
             isAttached = true;
-        }
+        
     }
 
     void Update()
