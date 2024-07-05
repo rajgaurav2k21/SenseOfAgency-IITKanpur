@@ -22,8 +22,6 @@ public class QuestionnaireManagerend : MonoBehaviour
     private void Start()
     {
         Panel.SetActive(true);
-
-        // Set the file path for saving responses
         filePath = Application.dataPath + "/CSV/Experience.csv";
         Directory.CreateDirectory(Application.dataPath + "/CSV");
         ActivateCurrentInputField();
@@ -40,14 +38,13 @@ public class QuestionnaireManagerend : MonoBehaviour
 
     private void Update()
     {
-        // Check for Enter key press to move to the next question
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (currentQuestionIndex < 2) // Adjusted to the number of input fields
+            if (currentQuestionIndex < 2)
             {
                 SaveCurrentAnswer();
                 currentQuestionIndex++;
-                if (currentQuestionIndex < 2) // Adjusted to the number of input fields
+                if (currentQuestionIndex < 2)
                 {
                     ActivateCurrentInputField();
                 }
@@ -55,27 +52,34 @@ public class QuestionnaireManagerend : MonoBehaviour
                 {
                     SaveAllAnswers();
                     currentQuestionIndex = 0;
-                    
                     Debug.Log("All answers saved to CSV.");
                 }
             }
         }
-
-        // Check for Space key press to reset questionnaire
         if (Input.GetKeyDown(KeyCode.Space))
         {
             feedback.SetActive(false);
             projectManager_block.buttonPressed = true;
         }
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (currentQuestionIndex == 0)
+            {
+                currentQuestionIndex = 1;
+            }
+            else if (currentQuestionIndex == 1)
+            {
+                currentQuestionIndex = 0;
+            }
+            ActivateCurrentInputField();
+        }
     }
+
 
     private void ActivateCurrentInputField()
     {
-        // Deactivate all input fields first
         inputField1.DeactivateInputField();
         inputField2.DeactivateInputField();
-
-        // Activate the current input field
         if (currentQuestionIndex == 0)
         {
             inputField1.ActivateInputField();
@@ -90,7 +94,6 @@ public class QuestionnaireManagerend : MonoBehaviour
 
     private void SaveCurrentAnswer()
     {
-        // Save current answer based on current question index
         if (currentQuestionIndex == 0)
         {
             string answer = inputField1.text;
@@ -104,13 +107,8 @@ public class QuestionnaireManagerend : MonoBehaviour
     }
     private void SaveAllAnswers()
     {
-        // Prepare CSV content
         StringBuilder csvContent = new StringBuilder();
-
-        // Append user responses
         csvContent.AppendLine($"\"{projectManager_block.usernameInput.text}\",\"{inputField1.text}\",\"{inputField2.text}\"");
-
-        // Write to CSV file
         using (StreamWriter sw = new StreamWriter(filePath, true, Encoding.UTF8))
         {
             sw.WriteLine(csvContent.ToString().TrimEnd());
@@ -121,7 +119,7 @@ public class QuestionnaireManagerend : MonoBehaviour
     }
     private IEnumerator ActivateInputFieldDelayed(TMP_InputField inputField)
     {
-        yield return null; // Wait for the end of the frame
+        yield return null;
 
         inputField.ActivateInputField();
         inputField.Select();

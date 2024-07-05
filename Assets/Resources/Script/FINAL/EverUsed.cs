@@ -36,14 +36,12 @@ public class EverUsed : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Y))
             {
-                Debug.Log("Y pressed");
                 PerformAction(true);
                 TextYes.SetActive(true);
                 TextNo.SetActive(false);
             }
             else if (Input.GetKeyDown(KeyCode.N))
             {
-                Debug.Log("N pressed");
                 PerformAction(false);
                 TextNo.SetActive(true);
                 TextYes.SetActive(false);

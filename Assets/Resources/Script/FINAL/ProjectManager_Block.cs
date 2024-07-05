@@ -171,7 +171,6 @@ public class ProjectManager_Block : MonoBehaviour
         int count = 0;
         GameObject weights = GameObject.Find("weights");
         ResetWeight resetWeight = weight.GetComponent<ResetWeight>();
-        Debug.Log("Next task Loading");
         Next.SetActive(true);
         yield return new WaitUntil(() => next);
         UICamera.SetActive(false);
@@ -181,14 +180,11 @@ public class ProjectManager_Block : MonoBehaviour
 
         foreach (string task in taskOrder)
         {
-            Debug.Log("Pick Up The Weight");
-            Debug.Log("Experiment Number: " + count);
 
             // Deactivate the current condition
             if (currentCondition != null)
             {
                 currentCondition.SetActive(false);
-                Debug.Log(currentCondition.name + " has been deactivated.");
             }
 
             Pickupmessage_LightWeight.SetActive(false);
@@ -338,8 +334,6 @@ public class ProjectManager_Block : MonoBehaviour
             Debug.Log("You can Rest");
             yield return new WaitUntil(() => restActive);
             BaselineConditionNoWeight.SetActive(false);
-            Debug.Log("Rest Up");
-            Debug.Log("Restting feedback");
             count++;
             BallPicked = false;
             restActive = false;
@@ -359,8 +353,6 @@ public class ProjectManager_Block : MonoBehaviour
             trajectoryInterventionWindNoiceWScript.enabled = false;
             trajectoryInterventionWindNoiceNWScript.enabled = false;
         }
-
-        Debug.Log("Experiment Complete.");
         EndingFeedback.SetActive(true);
         yield return new WaitUntil(() => FeedbackendGiven);
         EndingFeedback.SetActive(false);
@@ -376,7 +368,6 @@ public class ProjectManager_Block : MonoBehaviour
 
     public void OpenInfoPanel()
     {
-        Debug.Log("OpenInfoPanel called");
         Name.SetActive(false);
         userPanel.SetActive(false);
         StartCoroutine(ExperienceCoroutine());

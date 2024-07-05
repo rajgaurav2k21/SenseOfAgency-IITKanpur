@@ -37,27 +37,21 @@ public class PickUpHeavy : MonoBehaviour
         {
             case 0:
                 positionMarker = positionsMarkerArray[0];
-                Debug.Log("PositionMarker 0 is Activated");
                 break;
             case 1:
                 positionMarker = positionsMarkerArray[1];
-                Debug.Log("PositionMarker 1 is Activated");
                 break;
             case 2:
                 positionMarker = positionsMarkerArray[2];
-                Debug.Log("PositionMarker 2 is Activated");
                 break;
             case 3:
                 positionMarker = positionsMarkerArray[3];
-                Debug.Log("PositionMarker 3 is Activated");
                 break;
             case 4:
                 positionMarker = positionsMarkerArray[4];
-                Debug.Log("PositionMarker 4 is Activated");
                 break;
             case 5:
                 positionMarker = positionsMarkerArray[5];
-                Debug.Log("PositionMarker 5 is Activated");
                 break;
         }
         if (isAttached && palmTransform != null)
