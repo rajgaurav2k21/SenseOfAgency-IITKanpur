@@ -45,6 +45,9 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject InterventionConditionDynamicSpatialOffsetNonWeighted;
     public GameObject InterventionConditionWindNoiseWeighted;
     public GameObject InterventionConditionWindNoiseNonWeighted;
+    public GameObject InterventionConditionWindNoiseWeightedMarker;
+    public GameObject InterventionConditionDynamicSpatialOffsetWeightedMarker;
+    public GameObject InterventionConditionLagWeightedMarker;
 
     [Header("Path & Weights")]
     public GameObject path;
@@ -133,6 +136,9 @@ public class ProjectManager_Block : MonoBehaviour
         InterventionConditionDynamicSpatialOffsetNonWeighted.SetActive(false);
         InterventionConditionWindNoiseWeighted.SetActive(false);
         InterventionConditionWindNoiseNonWeighted.SetActive(false);
+        InterventionConditionWindNoiseWeightedMarker.SetActive(false);
+        InterventionConditionDynamicSpatialOffsetWeightedMarker.SetActive(false); ;
+        InterventionConditionLagWeightedMarker.SetActive(false);
         RestText.SetActive(false);
         TaskComplete.SetActive(false);
         Pickupmessage_LightWeight.SetActive(false);
@@ -154,7 +160,10 @@ public class ProjectManager_Block : MonoBehaviour
         InterventionConditionDynamicSpatialOffsetWeighted,
         InterventionConditionDynamicSpatialOffsetNonWeighted,
         InterventionConditionWindNoiseWeighted,
-        InterventionConditionWindNoiseNonWeighted
+        InterventionConditionWindNoiseNonWeighted,
+        InterventionConditionWindNoiseWeightedMarker,
+        InterventionConditionDynamicSpatialOffsetWeightedMarker,
+        InterventionConditionLagWeightedMarker
         };
         remainingConditions = new List<GameObject>(Conditions);
         conditionCounts = new int[Conditions.Length];
@@ -176,7 +185,7 @@ public class ProjectManager_Block : MonoBehaviour
         UICamera.SetActive(false);
         ExpCamera.SetActive(true);
         Next.SetActive(false);
-        string[] taskOrder = new string[] { "a", "b","c","d","e","f","g","h","i","j","k" };
+        string[] taskOrder = new string[] { "h" };
 
         foreach (string task in taskOrder)
         {
@@ -289,6 +298,13 @@ public class ProjectManager_Block : MonoBehaviour
                     lightComp.enabled = true;
                     pickupLight.currentTransform = 4;
                     trajectoryInterventionWindNoiceNWScript.enabled = true;
+                    break;
+                case "m":
+                    currentCondition = InterventionConditionWindNoiseWeightedMarker;
+                    Pickupmessage_HeavyWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionWindNoiseWeightedMarker");
+                    heavyComp.enabled = true;
+                    pickupHeavy.currentTransform = 6;
                     break;
             }
 

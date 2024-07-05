@@ -127,7 +127,7 @@ public class QuestionnaireManager : MonoBehaviour
 
         inputField2.text = "";
         inputField2.DeactivateInputField();
-
+        TextSpace.SetActive(false);
         StartCoroutine(ActivateInputFieldDelayed(inputField1));
     }
 
