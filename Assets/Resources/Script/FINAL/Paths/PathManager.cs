@@ -10,6 +10,7 @@ public class PathManager : MonoBehaviour
     public GameObject eightPathObject;
     public GameObject circularPathObject;
     public GameObject triangularPathObject;
+    public string Trajectory;
 
     void Start()
     {
@@ -44,22 +45,27 @@ public class PathManager : MonoBehaviour
                 case 0:
                     starPathObject.SetActive(true);
                     ballManager.starpathRenderer.enabled = true;
+                    Trajectory="Star";
                     break;
                 case 1:
                     spiralPathObject.SetActive(true);
                     ballManager.spiralpathRenderer.enabled = true;
+                    Trajectory="spiral";
                     break;
                 case 2:
                     eightPathObject.SetActive(true);
                     ballManager.eightpathRenderer.enabled = true;
+                    Trajectory="Eight";
                     break;
                 case 3:
                     circularPathObject.SetActive(true);
                     ballManager.circularpathRenderer.enabled = true;
+                    Trajectory="Circle";
                     break;
                 case 4:
                     triangularPathObject.SetActive(true);
                     ballManager.triangularpathRenderer.enabled = true;
+                    Trajectory="Triangle";
                     break;
             }
             ballManager.SetPathRenderer();

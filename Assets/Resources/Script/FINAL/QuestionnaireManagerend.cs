@@ -31,7 +31,7 @@ public class QuestionnaireManagerend : MonoBehaviour
         {
             using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
             {
-                sw.WriteLine("Username,Condition,Question1,Question2");
+                sw.WriteLine("Username,Question1,Question2");
             }
         }
         questionText1.text = "Question 1: How did you find the overall experience?";

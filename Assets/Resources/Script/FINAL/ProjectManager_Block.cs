@@ -177,7 +177,7 @@ public class ProjectManager_Block : MonoBehaviour
         UICamera.SetActive(false);
         ExpCamera.SetActive(true);
         Next.SetActive(false);
-        string[] taskOrder = new string[] { "a", "h" };
+        string[] taskOrder = new string[] { "a", "b","c","d","e","f","g","h","i","j","k" };
 
         foreach (string task in taskOrder)
         {

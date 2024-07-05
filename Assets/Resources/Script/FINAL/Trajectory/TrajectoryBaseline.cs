@@ -9,12 +9,17 @@ public class TrajectoryBaseline : MonoBehaviour
     private HashSet<Vector3> savedPoints;
     private string filePath;
     private string username;
+    private string track;
 
     void Start()
     {
         GameObject experimentManager_block = GameObject.Find("ExperimentManager_Block");
         ProjectManager_Block projectManager_block = experimentManager_block.GetComponent<ProjectManager_Block>();
         username = projectManager_block.usernameInput.text;
+        GameObject pathManager =GameObject.Find("PathManager");
+        PathManager pathManagerScript = pathManager.GetComponent<PathManager>();
+        track=pathManagerScript.Trajectory;
+        Debug.Log("Track is " + pathManagerScript.Trajectory);
         savedPoints = new HashSet<Vector3>();
         filePath = Application.dataPath + "/CSV/Trajectory/Baseline.csv";
         Directory.CreateDirectory(Path.GetDirectoryName(filePath));
@@ -23,7 +28,7 @@ public class TrajectoryBaseline : MonoBehaviour
         {
             using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
             {
-                sw.WriteLine("Username,X,Y,Z");
+                sw.WriteLine("Username,Trajectory,X,Y,Z");
             }
         }
     }
@@ -41,7 +46,7 @@ public class TrajectoryBaseline : MonoBehaviour
     {
         using (StreamWriter sw = new StreamWriter(filePath, true, Encoding.UTF8))
         {
-            string data = string.Format("{0},{1},{2},{3}",username, point.x, point.y, point.z);
+            string data = string.Format("{0},{1},{2},{3},{4}",username, track, point.x, point.y, point.z);
             sw.WriteLine(data);
             Debug.Log("Data Saved: " + data);
         }
