@@ -48,6 +48,7 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject InterventionConditionWindNoiseWeightedMarker;
     public GameObject InterventionConditionDynamicSpatialOffsetWeightedMarker;
     public GameObject InterventionConditionLagWeightedMarker;
+    public GameObject InterventionConditionSpatialOffsetWeightedMarker;
 
     [Header("Path & Weights")]
     public GameObject path;
@@ -95,13 +96,17 @@ public class ProjectManager_Block : MonoBehaviour
     public TrajectoryBaseline trajectoryBaselineScript;
     public TrajectoryInterventionDynamicSpatialOffsetNW trajectoryInterventionDynamicSpatialOffsetNWScript;
     public TrajectoryInterventionDynamicSpatialOffsetW trajectoryInterventionDynamicSpatialOffsetWScript;
+    public TrajectoryInterventionDynamicSpatialOffsetWM trajectoryInterventionDynamicSpatialOffsetWMScript;
     public TrajectoryInterventionLagNW trajectoryInterventionLagNWScript;
     public TrajectoryInterventionLagW trajectoryInterventionLagWScript;
+    public TrajectoryInterventionLagWM trajectoryInterventionLagWMScript;
     public TrajectoryInterventionMidpoint trajectoryInterventionMidpointScript;
     public TrajectoryInterventionSpatialOffsetNW trajectoryInterventionSpatialOffsetNWScript;
     public TrajectoryInterventionSpatialOffsetW trajectoryInterventionSpatialOffsetWScript;
+    public TrajectoryInterventionSpatialOffsetWM trajectoryInterventionSpatialOffsetWMScript;
     public TrajectoryInterventionWindNoiceNW trajectoryInterventionWindNoiceNWScript;
     public TrajectoryInterventionWindNoiceW trajectoryInterventionWindNoiceWScript;
+    public TrajectoryInterventionWindNoiceWM trajectoryInterventionWindNoiceWMScript;
     public TrajectoryNonIntervention trajectoryNonInterventionScript;
     void Start()
     {
@@ -117,6 +122,12 @@ public class ProjectManager_Block : MonoBehaviour
         trajectoryInterventionDynamicSpatialOffsetNWScript.enabled = false;
         trajectoryInterventionWindNoiceWScript.enabled = false;
         trajectoryInterventionWindNoiceNWScript.enabled = false;
+        trajectoryInterventionLagWMScript.enabled = false;
+        trajectoryInterventionDynamicSpatialOffsetWMScript.enabled = false;
+        trajectoryInterventionSpatialOffsetWMScript.enabled = false;
+        trajectoryInterventionWindNoiceWMScript.enabled = false;
+
+
         lightComp = lightWeight.GetComponent<Light>();
         heavyComp = heavyWeight.GetComponent<Light>();
         feedback.SetActive(false);
@@ -137,8 +148,9 @@ public class ProjectManager_Block : MonoBehaviour
         InterventionConditionWindNoiseWeighted.SetActive(false);
         InterventionConditionWindNoiseNonWeighted.SetActive(false);
         InterventionConditionWindNoiseWeightedMarker.SetActive(false);
-        InterventionConditionDynamicSpatialOffsetWeightedMarker.SetActive(false); ;
+        InterventionConditionDynamicSpatialOffsetWeightedMarker.SetActive(false);
         InterventionConditionLagWeightedMarker.SetActive(false);
+        InterventionConditionSpatialOffsetWeightedMarker.SetActive(false);
         RestText.SetActive(false);
         TaskComplete.SetActive(false);
         Pickupmessage_LightWeight.SetActive(false);
@@ -163,7 +175,8 @@ public class ProjectManager_Block : MonoBehaviour
         InterventionConditionWindNoiseNonWeighted,
         InterventionConditionWindNoiseWeightedMarker,
         InterventionConditionDynamicSpatialOffsetWeightedMarker,
-        InterventionConditionLagWeightedMarker
+        InterventionConditionLagWeightedMarker,
+        InterventionConditionSpatialOffsetWeightedMarker
         };
         remainingConditions = new List<GameObject>(Conditions);
         conditionCounts = new int[Conditions.Length];
@@ -299,12 +312,37 @@ public class ProjectManager_Block : MonoBehaviour
                     pickupLight.currentTransform = 4;
                     trajectoryInterventionWindNoiceNWScript.enabled = true;
                     break;
+                case "l":
+                    currentCondition = InterventionConditionLagWeightedMarker;
+                    Pickupmessage_HeavyWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionLagWeightedMarker");
+                    heavyComp.enabled = true;
+                    pickupHeavy.currentTransform = 6;
+                    trajectoryInterventionLagWMScript.enabled = true;
+                    break;
                 case "m":
+                    currentCondition = InterventionConditionSpatialOffsetWeightedMarker;
+                    Pickupmessage_HeavyWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionSpatialOffsetWeightedMarker");
+                    heavyComp.enabled = true;
+                    pickupHeavy.currentTransform = 7;
+                    trajectoryInterventionSpatialOffsetWMScript.enabled = true;
+                    break;
+                case "n":
+                    currentCondition = InterventionConditionDynamicSpatialOffsetWeightedMarker;
+                    Pickupmessage_HeavyWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetWeightedMarker");
+                    heavyComp.enabled = true;
+                    pickupHeavy.currentTransform = 8;
+                    trajectoryInterventionDynamicSpatialOffsetWMScript.enabled = true;
+                    break;
+                case "o":
                     currentCondition = InterventionConditionWindNoiseWeightedMarker;
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionWindNoiseWeightedMarker");
                     heavyComp.enabled = true;
-                    pickupHeavy.currentTransform = 6;
+                    pickupHeavy.currentTransform = 9;
+                    trajectoryInterventionWindNoiceWMScript.enabled = true;
                     break;
             }
 
@@ -368,6 +406,10 @@ public class ProjectManager_Block : MonoBehaviour
             trajectoryInterventionDynamicSpatialOffsetNWScript.enabled = false;
             trajectoryInterventionWindNoiceWScript.enabled = false;
             trajectoryInterventionWindNoiceNWScript.enabled = false;
+            trajectoryInterventionLagWMScript.enabled = false;
+            trajectoryInterventionDynamicSpatialOffsetWMScript.enabled = false;
+            trajectoryInterventionSpatialOffsetWMScript.enabled = false;
+            trajectoryInterventionWindNoiceWMScript.enabled = false;
         }
         EndingFeedback.SetActive(true);
         yield return new WaitUntil(() => FeedbackendGiven);
