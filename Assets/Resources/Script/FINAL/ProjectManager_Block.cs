@@ -108,6 +108,8 @@ public class ProjectManager_Block : MonoBehaviour
     public TrajectoryInterventionWindNoiceW trajectoryInterventionWindNoiceWScript;
     public TrajectoryInterventionWindNoiceWM trajectoryInterventionWindNoiceWMScript;
     public TrajectoryNonIntervention trajectoryNonInterventionScript;
+    [Header("Video Player")]
+    public VideoPlayer videoPlayer;
     void Start()
     {
         TrajectoryTracker.SetActive(false);
@@ -384,6 +386,7 @@ public class ProjectManager_Block : MonoBehaviour
             yield return new WaitUntil(() => buttonPressed);
             RestText.SetActive(true);
             rest.SetActive(true);
+            videoPlayer.PlayVideo();
             BaselineConditionNoWeight.SetActive(true);
             Debug.Log("You can Rest");
             yield return new WaitUntil(() => restActive);
@@ -392,6 +395,7 @@ public class ProjectManager_Block : MonoBehaviour
             BallPicked = false;
             restActive = false;
             rest.SetActive(false);
+            videoPlayer.PauseVideo();
             buttonPressed = false;
             UICamera.SetActive(false);
             ExpCamera.SetActive(true);
