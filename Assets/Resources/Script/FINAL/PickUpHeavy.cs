@@ -53,6 +53,18 @@ public class PickUpHeavy : MonoBehaviour
             case 5:
                 positionMarker = positionsMarkerArray[5];
                 break;
+            case 6:
+                positionMarker = positionsMarkerArray[6];
+                break;
+            case 7:
+                positionMarker = positionsMarkerArray[7];
+                break;
+            case 8:
+                positionMarker = positionsMarkerArray[8];
+                break;
+            case 9:
+                positionMarker = positionsMarkerArray[9];
+                break;
         }
         if (isAttached && palmTransform != null)
         {
