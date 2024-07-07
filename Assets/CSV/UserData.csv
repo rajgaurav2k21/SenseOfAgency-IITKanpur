@@ -16,3 +16,8 @@
 "G","InterventionCondition(WindNoice) w","4","4"
 "G","InterventionCondition(Dynamic Spatial Offset) w","4","4"
 "Hgg","InterventionCondition(Dynamic Spatial Offset) w","5","5"
+"Nmnn","BaselineCondition(Non Weight)","5","5"
+"Nmnn","NonInterventionCondition w","5","5"
+"Hhg","BaselineCondition(Non Weight)","6","6"
+"Hhg","InterventionCondition(Midpoint) w","","5"
+"Hjjgh","InterventionCondition(Midpoint) w","5","5"

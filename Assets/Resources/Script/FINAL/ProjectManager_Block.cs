@@ -200,7 +200,7 @@ public class ProjectManager_Block : MonoBehaviour
         UICamera.SetActive(false);
         ExpCamera.SetActive(true);
         Next.SetActive(false);
-        string[] taskOrder = new string[] { "h" };
+        string[] taskOrder = new string[] {"c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o" };
 
         foreach (string task in taskOrder)
         {
@@ -366,6 +366,8 @@ public class ProjectManager_Block : MonoBehaviour
 
             // Active Time of the Condition
             yield return new WaitForSeconds(ExperimentDuration);
+            Debug.Log("path over");
+            PathEnabled = false;
 
             TaskComplete.SetActive(true);
             Target.SetActive(false);
@@ -419,7 +421,7 @@ public class ProjectManager_Block : MonoBehaviour
         yield return new WaitUntil(() => FeedbackendGiven);
         EndingFeedback.SetActive(false);
         COMPLETE.SetActive(true);
-        PathEnabled = false;
+        
     }
     public void StartExp()
     {
