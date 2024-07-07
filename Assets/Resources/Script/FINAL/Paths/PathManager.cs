@@ -68,9 +68,8 @@ public class PathManager : MonoBehaviour
                     Trajectory="Triangle";
                     break;
             }
-            Debug.Log("Trajectory "+Trajectory);
             ballManager.SetPathRenderer();
-            yield return new WaitUntil(() => !projectManager_Block.PathEnabled);
+            yield return new WaitForSeconds(50f);
         }
     }
 }

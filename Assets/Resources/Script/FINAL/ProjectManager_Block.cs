@@ -39,16 +39,16 @@ public class ProjectManager_Block : MonoBehaviour
     public GameObject InterventionConditionMidpoint;
     public GameObject InterventionConditionLagWeighted;
     public GameObject InterventionConditionLagNonWeighted;
-    public GameObject InterventionConditionLagWeightedMarker;
     public GameObject InterventionConditionSpatialOffsetWeighted;
     public GameObject InterventionConditionSpatialOffsetNonWeighted;
-    public GameObject InterventionConditionSpatialOffsetWeightedMarker;
     public GameObject InterventionConditionDynamicSpatialOffsetWeighted;
     public GameObject InterventionConditionDynamicSpatialOffsetNonWeighted;
-    public GameObject InterventionConditionDynamicSpatialOffsetWeightedMarker;
     public GameObject InterventionConditionWindNoiseWeighted;
     public GameObject InterventionConditionWindNoiseNonWeighted;
     public GameObject InterventionConditionWindNoiseWeightedMarker;
+    public GameObject InterventionConditionDynamicSpatialOffsetWeightedMarker;
+    public GameObject InterventionConditionLagWeightedMarker;
+    public GameObject InterventionConditionSpatialOffsetWeightedMarker;
 
     [Header("Path & Weights")]
     public GameObject path;
@@ -169,16 +169,16 @@ public class ProjectManager_Block : MonoBehaviour
         InterventionConditionMidpoint,
         InterventionConditionLagWeighted,
         InterventionConditionLagNonWeighted,
-        InterventionConditionLagWeightedMarker,
         InterventionConditionSpatialOffsetWeighted,
         InterventionConditionSpatialOffsetNonWeighted,
-        InterventionConditionSpatialOffsetWeightedMarker,
         InterventionConditionDynamicSpatialOffsetWeighted,
         InterventionConditionDynamicSpatialOffsetNonWeighted,
-        InterventionConditionDynamicSpatialOffsetWeightedMarker,
         InterventionConditionWindNoiseWeighted,
         InterventionConditionWindNoiseNonWeighted,
-        InterventionConditionWindNoiseWeightedMarker
+        InterventionConditionWindNoiseWeightedMarker,
+        InterventionConditionDynamicSpatialOffsetWeightedMarker,
+        InterventionConditionLagWeightedMarker,
+        InterventionConditionSpatialOffsetWeightedMarker
         };
         remainingConditions = new List<GameObject>(Conditions);
         conditionCounts = new int[Conditions.Length];
@@ -200,7 +200,7 @@ public class ProjectManager_Block : MonoBehaviour
         UICamera.SetActive(false);
         ExpCamera.SetActive(true);
         Next.SetActive(false);
-        string[] taskOrder = new string[] {"a", "k", "b", "d", "j", "o", "c", "m", "n", "h", "e", "f", "b", "a", "i", "o", "m", "k", "e", "d", "l", "c", "j", "i", "h", "m", "n", "k", "a", "b", "e", "o", "f", "i", "l", "h", "d", "g", "j", "m", "c", "a", "e", "k", "l", "b", "i", "o", "n", "d", "g", "f", "j", "h", "c", "a", "l", "n", "o", "m", "g", "k", "b", "f", "i", "d", "e", "h", "l", "j", "c", "g", "a", "o", "f", "b", "m", "n", "i", "d", "k", "l", "e", "h", "g", "c", "j", "f", "n", "i", "b", "o", "m", "a", "k", "d", "g"};
+        string[] taskOrder = new string[] { "h" };
 
         foreach (string task in taskOrder)
         {
@@ -262,24 +262,15 @@ public class ProjectManager_Block : MonoBehaviour
                     break;
 
                 case "f":
-                    currentCondition = InterventionConditionLagWeightedMarker;
-                    Pickupmessage_HeavyWeight.SetActive(true);
-                    Debug.Log("Current Condition: InterventionConditionLagWeightedMarker");
-                    heavyComp.enabled = true;
-                    pickupHeavy.currentTransform = 3;
-                    trajectoryInterventionLagWMScript.enabled = true;
-                    break;
-
-                case "g":
                     currentCondition = InterventionConditionSpatialOffsetWeighted;
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionSpatialOffsetWeighted");
                     heavyComp.enabled = true;
-                    pickupHeavy.currentTransform = 4;
+                    pickupHeavy.currentTransform = 3;
                     trajectoryInterventionSpatialOffsetWScript.enabled = true;
                     break;
 
-                case "h":
+                case "g":
                     currentCondition = InterventionConditionSpatialOffsetNonWeighted;
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionSpatialOffsetNonWeighted");
@@ -288,25 +279,16 @@ public class ProjectManager_Block : MonoBehaviour
                     trajectoryInterventionSpatialOffsetNWScript.enabled = true;
                     break;
 
-                case "i":
-                    currentCondition = InterventionConditionSpatialOffsetWeightedMarker;
-                    Pickupmessage_HeavyWeight.SetActive(true);
-                    Debug.Log("Current Condition: InterventionConditionSpatialOffsetWeightedMarker");
-                    heavyComp.enabled = true;
-                    pickupHeavy.currentTransform = 5;
-                    trajectoryInterventionSpatialOffsetWMScript.enabled = true;
-                    break;
-
-                case "j":
+                case "h":
                     currentCondition = InterventionConditionDynamicSpatialOffsetWeighted;
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetWeighted");
                     heavyComp.enabled = true;
-                    pickupHeavy.currentTransform = 6;
+                    pickupHeavy.currentTransform = 4;
                     trajectoryInterventionDynamicSpatialOffsetWScript.enabled = true;
                     break;
 
-                case "k":
+                case "i":
                     currentCondition = InterventionConditionDynamicSpatialOffsetNonWeighted;
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetNonWeighted");
@@ -315,25 +297,16 @@ public class ProjectManager_Block : MonoBehaviour
                     trajectoryInterventionDynamicSpatialOffsetNWScript.enabled = true;
                     break;
 
-                case "l":
-                    currentCondition = InterventionConditionDynamicSpatialOffsetWeightedMarker;
-                    Pickupmessage_HeavyWeight.SetActive(true);
-                    Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetWeightedMarker");
-                    heavyComp.enabled = true;
-                    pickupHeavy.currentTransform = 7;
-                    trajectoryInterventionDynamicSpatialOffsetWMScript.enabled = true;
-                    break;
-
-                case "m":
+                case "j":
                     currentCondition = InterventionConditionWindNoiseWeighted;
                     Pickupmessage_HeavyWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionWindNoiseWeighted");
                     heavyComp.enabled = true;
-                    pickupHeavy.currentTransform = 8;
+                    pickupHeavy.currentTransform = 5;
                     trajectoryInterventionWindNoiceWScript.enabled = true;
                     break;
 
-                case "n":
+                case "k":
                     currentCondition = InterventionConditionWindNoiseNonWeighted;
                     Pickupmessage_LightWeight.SetActive(true);
                     Debug.Log("Current Condition: InterventionConditionWindNoiseNonWeighted");
@@ -341,7 +314,30 @@ public class ProjectManager_Block : MonoBehaviour
                     pickupLight.currentTransform = 4;
                     trajectoryInterventionWindNoiceNWScript.enabled = true;
                     break;
-
+                case "l":
+                    currentCondition = InterventionConditionLagWeightedMarker;
+                    Pickupmessage_HeavyWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionLagWeightedMarker");
+                    heavyComp.enabled = true;
+                    pickupHeavy.currentTransform = 6;
+                    trajectoryInterventionLagWMScript.enabled = true;
+                    break;
+                case "m":
+                    currentCondition = InterventionConditionSpatialOffsetWeightedMarker;
+                    Pickupmessage_HeavyWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionSpatialOffsetWeightedMarker");
+                    heavyComp.enabled = true;
+                    pickupHeavy.currentTransform = 7;
+                    trajectoryInterventionSpatialOffsetWMScript.enabled = true;
+                    break;
+                case "n":
+                    currentCondition = InterventionConditionDynamicSpatialOffsetWeightedMarker;
+                    Pickupmessage_HeavyWeight.SetActive(true);
+                    Debug.Log("Current Condition: InterventionConditionDynamicSpatialOffsetWeightedMarker");
+                    heavyComp.enabled = true;
+                    pickupHeavy.currentTransform = 8;
+                    trajectoryInterventionDynamicSpatialOffsetWMScript.enabled = true;
+                    break;
                 case "o":
                     currentCondition = InterventionConditionWindNoiseWeightedMarker;
                     Pickupmessage_HeavyWeight.SetActive(true);
@@ -370,8 +366,6 @@ public class ProjectManager_Block : MonoBehaviour
 
             // Active Time of the Condition
             yield return new WaitForSeconds(ExperimentDuration);
-            Debug.Log("path over");
-            PathEnabled = false;
 
             TaskComplete.SetActive(true);
             Target.SetActive(false);
@@ -425,7 +419,7 @@ public class ProjectManager_Block : MonoBehaviour
         yield return new WaitUntil(() => FeedbackendGiven);
         EndingFeedback.SetActive(false);
         COMPLETE.SetActive(true);
-        
+        PathEnabled = false;
     }
     public void StartExp()
     {
