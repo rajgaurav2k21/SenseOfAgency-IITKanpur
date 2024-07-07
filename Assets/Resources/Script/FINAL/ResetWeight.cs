@@ -13,12 +13,12 @@ public class ResetWeight : MonoBehaviour
         if (reset)
         {
             // Reset positions
-            weight1.transform.position = new Vector3(0.282000005f, 0.00999999978f, -0.00300000003f);
-            weight2.transform.position = new Vector3(0.0790000036f, 0.00999999978f, -0.0140000004f);
+            weight1.transform.position = new Vector3(0.317000002f,0.0472999997f,0.00300000003f);
+            weight2.transform.position = new Vector3(-0.0419999994f,0.0472999997f,-0.0109999999f);
 
             // Reset rotations
-            weight1.transform.rotation = Quaternion.Euler(0, 177.709122f, 0);
-            weight2.transform.rotation = Quaternion.Euler(0, 177.709122f, 0);
+            weight1.transform.rotation = Quaternion.Euler(0,267.709106f,0);
+            weight2.transform.rotation = Quaternion.Euler(0,267.709106f,0);
 
             // Set reset to false to prevent continuous resetting
             reset = false;
