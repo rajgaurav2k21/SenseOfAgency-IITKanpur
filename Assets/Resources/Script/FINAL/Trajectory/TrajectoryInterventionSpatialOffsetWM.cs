@@ -21,7 +21,7 @@ public class TrajectoryInterventionSpatialOffsetWM : MonoBehaviour
         track=pathManagerScript.Trajectory;
         Debug.Log("Track is " + pathManagerScript.Trajectory);
         savedPoints = new HashSet<Vector3>();
-        filePath = Application.dataPath + "/CSV/Trajectory/InterventionSpatialOffsetW";
+        filePath = Application.dataPath + "/CSV/Trajectory/InterventionSpatialOffsetWeightMarker";
         Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
         if (!File.Exists(filePath))

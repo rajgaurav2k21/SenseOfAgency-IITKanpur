@@ -200,7 +200,9 @@ public class ProjectManager_Block : MonoBehaviour
         UICamera.SetActive(false);
         ExpCamera.SetActive(true);
         Next.SetActive(false);
-        string[] taskOrder = new string[] {"a", "k", "b", "d", "j", "o", "c", "m", "n", "h", "e", "f", "b", "a", "i", "o", "m", "k", "e", "d", "l", "c", "j", "i", "h", "m", "n", "k", "a", "b", "e", "o", "f", "i", "l", "h", "d", "g", "j", "m", "c", "a", "e", "k", "l", "b", "i", "o", "n", "d", "g", "f", "j", "h", "c", "a", "l", "n", "o", "m", "g", "k", "b", "f", "i", "d", "e", "h", "l", "j", "c", "g", "a", "o", "f", "b", "m", "n", "i", "d", "k", "l", "e", "h", "g", "c", "j", "f", "n", "i", "b", "o", "m", "a", "k", "d", "g"};
+        string[] taskOrder = new string[] {"m","n","o"};
+
+        //string[] taskOrder = new string[] {"a", "k", "b", "d", "j", "o", "c", "m", "n", "h", "e", "f", "b", "a", "i", "o", "m", "k", "e", "d", "l", "c", "j", "i", "h", "m", "n", "k", "a", "b", "e", "o", "f", "i", "l", "h", "d", "g", "j", "m", "c", "a", "e", "k", "l", "b", "i", "o", "n", "d", "g", "f", "j", "h", "c", "a", "l", "n", "o", "m", "g", "k", "b", "f", "i", "d", "e", "h", "l", "j", "c", "g", "a", "o", "f", "b", "m", "n", "i", "d", "k", "l", "e", "h", "g", "c", "j", "f", "n", "i", "b", "o", "m", "a", "k", "d", "g"};
 
         foreach (string task in taskOrder)
         {

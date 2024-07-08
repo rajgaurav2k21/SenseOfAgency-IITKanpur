@@ -21,7 +21,7 @@ public class TrajectoryInterventionWindNoiceWM : MonoBehaviour
         track=pathManagerScript.Trajectory;
         Debug.Log("Track is " + pathManagerScript.Trajectory);
         savedPoints = new HashSet<Vector3>();
-        filePath = Application.dataPath + "/CSV/Trajectory/InterventionWindW.csv";
+        filePath = Application.dataPath + "/CSV/Trajectory/InterventionWindWeightMarker.csv";
         Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
         if (!File.Exists(filePath))
