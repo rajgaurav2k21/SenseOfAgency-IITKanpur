@@ -1,6 +1,0 @@
-﻿Username,Condition,Question1,Question2
-"Gaurav","InterventionCondition(Lag) nw","3","3"
-"Gaurav","InterventionCondition(Dynamic Spatial Offset) nw","4","4"
-"Gaurav","InterventionCondition(WindNoice) nw","6","3"
-"Gaurav","InterventionCondition(Spatial Offset) wm","6","6"
-"Gaurav","InterventionCondition(Dynamic Spatial Offset) wm","7","7"
