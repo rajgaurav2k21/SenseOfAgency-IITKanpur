@@ -201,12 +201,9 @@ public class ProjectManager_Block : MonoBehaviour
         ExpCamera.SetActive(true);
         Next.SetActive(false);
         //string[] taskOrder = new string[] {"o"};
-
-        string[] taskOrder = new string[] {"a","e","h","k","n","a","e","h","n","k","e","b", "d", "j", "o", "c", "m", "n", "h", "e", "f", "b", "a", "i", "o", "m", "k", "e", "d", "l", "c", "j", "i", "h", "m", "n", "k", "a", "b", "e", "o", "f", "i", "l", "h", "d", "g", "j", "m", "c", "a", "e", "k", "l", "b", "i", "o", "n", "d", "g", "f", "j", "h", "c", "a", "l", "n", "o", "m", "g", "k", "b", "f", "i", "d", "e", "h", "l", "j", "c", "g", "a", "o", "f", "b", "m", "n", "i", "d", "k", "l", "e", "h", "g", "c", "j", "f", "n", "i", "b", "o", "m", "a", "k", "d", "g"};
-
+        string[] taskOrder = new string[] {"a","e","h","k","n","f", "b", "k", "o", "n", "j", "m", "l", "i", "h", "a", "d", "e", "g", "c","b", "k", "g", "m", "c", "a", "e", "h", "i", "f", "o", "d", "n", "j", "l","f", "i", "a", "h", "b", "c", "o", "k", "d", "l", "j", "m", "e", "g", "n","j", "l","d", "c", "k", "o", "i", "a", "b", "m", "n", "f", "e", "h", "g","k", "h", "n", "j", "o", "b", "i", "m", "e", "g", "a", "f", "l", "c", "d"};
         foreach (string task in taskOrder)
         {
-
             // Deactivate the current condition
             if (currentCondition != null)
             {
