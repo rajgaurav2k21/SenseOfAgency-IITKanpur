@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PickUpHeavy : MonoBehaviour
 {
+    public LagMidpoint lagMidpoint;
     public Transform[] positionsMarkerArray;
     private Transform positionMarker;
     public int currentTransform;
     private bool isAttached = false;
     private Transform palmTransform;
-
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -28,6 +28,7 @@ public class PickUpHeavy : MonoBehaviour
             projectManager_block.Pickupmessage_HeavyWeight.SetActive(false);
             projectManager_block.lightComp.enabled = false;
             projectManager_block.heavyComp.enabled = false;
+            lagMidpoint.picked =true;
         }
     }
 

@@ -27,6 +27,9 @@ public class LagMidpoint : PostProcessProvider
     [SerializeField]
     private float maxMoveDistance = 0.1f; // Maximum movement per frame
 
+    [SerializeField]
+    public bool picked = false; // Boolean to indicate if the hand is picked
+
     void Start()
     {
         frameDelay = delayTime; // Setting frameDelay directly as we handle it in seconds
@@ -95,27 +98,35 @@ public class LagMidpoint : PostProcessProvider
 
             if (delayedHandData != null)
             {
-                // Calculate midpoint movement
-                if (targetBallTransform != null)
+                if (picked) // Check if the hand is picked
                 {
-                    Vector3 targetBallPos = targetBallTransform.position;
-                    Vector3 handPosition = delayedHandData.position;
-                    Vector3 midpoint = (handPosition + targetBallPos) / 2.0f;
-
-                    // Calculate the movement vector
-                    Vector3 moveVector = midpoint - handPosition;
-
-                    // Limit the movement distance
-                    if (moveVector.magnitude > maxMoveDistance)
+                    // Calculate midpoint movement
+                    if (targetBallTransform != null)
                     {
-                        moveVector = moveVector.normalized * maxMoveDistance;
-                    }
+                        Vector3 targetBallPos = targetBallTransform.position;
+                        Vector3 handPosition = delayedHandData.position;
+                        Vector3 midpoint = (handPosition + targetBallPos) / 2.0f;
 
-                    // Set the new hand position
-                    hand.SetTransform(handPosition + moveVector, delayedHandData.rotation);
+                        // Calculate the movement vector
+                        Vector3 moveVector = midpoint - handPosition;
+
+                        // Limit the movement distance
+                        if (moveVector.magnitude > maxMoveDistance)
+                        {
+                            moveVector = moveVector.normalized * maxMoveDistance;
+                        }
+
+                        // Set the new hand position
+                        hand.SetTransform(handPosition + moveVector, delayedHandData.rotation);
+                    }
+                    else
+                    {
+                        hand.SetTransform(delayedHandData.position, delayedHandData.rotation);
+                    }
                 }
                 else
                 {
+                    // If not picked, set the hand position to its original position
                     hand.SetTransform(delayedHandData.position, delayedHandData.rotation);
                 }
             }
